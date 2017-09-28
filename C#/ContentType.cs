@@ -3,6 +3,8 @@ using System.Reflection;
 
 namespace Grapevine
 {
+    // http://www.ietf.org/rfc/rfc4288.txt?number=4288
+    // https://gist.github.com/scottoffen/11197961
     public enum ContentType
     {
         [Metadata(Value = "application/x-authorware-bin", IsBinary = true)]

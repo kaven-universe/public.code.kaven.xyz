@@ -16,10 +16,6 @@ def get_file_version(name):
         return version
 
 
-def isEDM(p):
-    return get_file_name(p).startswith('EDM')
-
-
 def compare_version(a, b):
     sp_a = a.split('.')
     sp_b = b.split('.')
@@ -35,7 +31,7 @@ def ftp_login(url):
     return ftp
 
 
-def ftp_get_files(ftp, path, f):
+def ftp_get_files(ftp, path, start):
     # files = []
 
     # def parse(p):
@@ -47,8 +43,14 @@ def ftp_get_files(ftp, path, f):
     # ftp.cwd('Packages/rar_EDM_2/')
     # ftp.retrlines('LIST', parse)
 
+    def name_filter(p):
+        return get_file_name(p).startswith(start)
+
     files = ftp.nlst('Packages/rar_EDM_2/')
-    files = filter(f, files)
+
+    if start is not None:
+        files = filter(name_filter, files)
+
     return files
 
 
@@ -87,7 +89,7 @@ def ftp_download(ftp, save_dir, name):
     if name != '':
         path = save_dir + get_file_name(name)   # 定义文件保存路径
         if os.path.isfile(path):
-            print('file already exist')
+            print('file:'+path+' already exist')
         else:
             print('downloading: '+name)
             f = open(path, 'wb')   # 打开要保存文件
@@ -95,8 +97,15 @@ def ftp_download(ftp, save_dir, name):
             ftp.retrbinary(filename, f.write)   # 保存FTP上的文件
 
 
-ftp = ftp_login('192.168.1.201')
-files = ftp_get_files(ftp, 'Packages/rar_EDM_2/', isEDM)
-latest = get_latest_version_file(ftp, files)
+def main():
+    ftp = ftp_login('192.168.1.201')
 
-ftp_download(ftp, 'D:/EDM_Release/', latest)
+    start_names = ['EDM Testing', 'Post Analyzer']
+
+    for name in start_names:
+        files = ftp_get_files(ftp, 'Packages/rar_EDM_2/', name)
+        latest = get_latest_version_file(ftp, files)
+        ftp_download(ftp, 'D:/EDM_Release/', latest)
+
+
+main()

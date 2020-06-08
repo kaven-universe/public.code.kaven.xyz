@@ -2,10 +2,15 @@ from ftplib import FTP
 import re
 import os
 
+# pip install unrar
+from unrar import rarfile
+
 
 def get_file_name(p):
     return p.split('/')[-1]
 
+def get_file_name_without_extension(p):
+    return os.path.splitext(get_file_name(p))[0]
 
 def get_file_version(name):
     name = get_file_name(name)
@@ -95,6 +100,17 @@ def ftp_download(ftp, save_dir, name):
             f = open(path, 'wb')   # 打开要保存文件
             filename = 'RETR ' + name   # 保存FTP文件
             ftp.retrbinary(filename, f.write)   # 保存FTP上的文件
+            return path
+
+
+def extract_rar(rar_file, to=None):
+
+    rar = rarfile.RarFile(rar_file)
+
+    if to == None:
+        to = os.path.join(os.path.dirname(rar_file), get_file_name_without_extension(rar_file))
+
+    rar.extractall(to)
 
 
 def main():
@@ -105,7 +121,9 @@ def main():
     for name in start_names:
         files = ftp_get_files(ftp, 'Packages/rar_EDM_2/', name)
         latest = get_latest_version_file(ftp, files)
-        ftp_download(ftp, 'D:/EDM_Release/', latest)
+        path = ftp_download(ftp, 'D:/EDM_Release/', latest)
+        if path is not None:
+            extract_rar(path)
 
 
 main()

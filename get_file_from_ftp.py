@@ -2,10 +2,23 @@ from ftplib import FTP
 import re
 import os
 
-ftp = FTP('192.168.1.201')
-ftp.login()
 
-files = []
+def get_file_name(p):
+    return p.split('/')[-1]
+
+
+def get_file_version(name):
+    name = get_file_name(name)
+    sr = re.search(r'.*((\d+\.)(\d+\.)(\d+\.)(\d)).*', name)
+    if sr is not None:
+        version = sr.group(1)
+        # print('file: '+name+', version: '+version)
+        return version
+
+
+def isEDM(p):
+    return get_file_name(p).startswith('EDM')
+
 
 def compare_version(a, b):
     sp_a = a.split('.')
@@ -16,44 +29,74 @@ def compare_version(a, b):
     return 0
 
 
-# def parse(p):
-#     print(p)
-#     file_name = p.split(' ')[-1]
-#     if file_name != '.' and file_name != '..':
-#         files.append(file_name)
+def ftp_login(url):
+    ftp = FTP(url)
+    ftp.login()
+    return ftp
 
-# ftp.cwd('Packages/rar_EDM_2/')
-# ftp.retrlines('LIST', parse)
 
-files = ftp.nlst('Packages/rar_EDM_2/')
+def ftp_get_files(ftp, path, f):
+    # files = []
 
-latestVersion = '0.0.0.0'
-latest = ''
+    # def parse(p):
+    #     print(p)
+    #     file_name = p.split(' ')[-1]
+    #     if file_name != '.' and file_name != '..':
+    #         files.append(file_name)
 
-for name in files:
+    # ftp.cwd('Packages/rar_EDM_2/')
+    # ftp.retrlines('LIST', parse)
+
+    files = ftp.nlst('Packages/rar_EDM_2/')
+    files = filter(f, files)
+    return files
+
+
+def ftp_is_file(ftp, name):
     try:
         ftp.cwd(name)
         # print('dir: '+name)
     except:
-        sr = re.search(r'.*((\d+\.)(\d+\.)(\d+\.)(\d)).*', name)
-        if sr is not None:
-            version = sr.group(1)
-            # print('file: '+name+', version: '+version)
-
-            if compare_version(version, latestVersion) > 0:
-                latestVersion = version
-                latest = name
+        return True
     else:
         # 打开路径没问题，类型是文件夹，返回上一级
         # ftp.cwd('..')
         ftp.cwd('/')
+        return False
 
-print('latest: '+latest)
 
-path = 'D:/EDM_Release/' + latest.split('/')[-1]   # 定义文件保存路径
-if os.path.isfile(path):
-    print('file already exist')
-else:
-    f = open(path, 'wb')   # 打开要保存文件
-    filename = 'RETR ' + latest   # 保存FTP文件
-    ftp.retrbinary(filename, f.write)   # 保存FTP上的文件
+def get_latest_version_file(ftp, files):
+    latestVersion = '0.0.0.0'
+    latest = ''
+
+    for name in files:
+        if ftp_is_file(ftp, name):
+
+            version = get_file_version(name)
+            # print('file: '+name+', version: '+version)
+
+            if version is not None:
+                if compare_version(version, latestVersion) > 0:
+                    latestVersion = version
+                    latest = name
+
+    return latest
+
+
+def ftp_download(ftp, save_dir, name):
+    if name != '':
+        path = save_dir + get_file_name(name)   # 定义文件保存路径
+        if os.path.isfile(path):
+            print('file already exist')
+        else:
+            print('downloading: '+name)
+            f = open(path, 'wb')   # 打开要保存文件
+            filename = 'RETR ' + name   # 保存FTP文件
+            ftp.retrbinary(filename, f.write)   # 保存FTP上的文件
+
+
+ftp = ftp_login('192.168.1.201')
+files = ftp_get_files(ftp, 'Packages/rar_EDM_2/', isEDM)
+latest = get_latest_version_file(ftp, files)
+
+ftp_download(ftp, 'D:/EDM_Release/', latest)

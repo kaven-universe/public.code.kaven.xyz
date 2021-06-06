@@ -4,9 +4,9 @@
  * @website:     http://blog.kaven.xyz
  * @file:        [Kaven-Common] /JavaScript/bilibili.js
  * @create:      2021-06-05 10:33:40.467
- * @modify:      2021-06-06 15:05:24.984
+ * @modify:      2021-06-06 22:45:20.009
  * @version:     
- * @times:       16
+ * @times:       17
  * @lines:       164
  * @copyright:   Copyright © 2021 Kaven. All Rights Reserved.
  * @description: [description]
@@ -160,5 +160,5 @@ function skip(...fromToPairs) {
     }
 }
 
-skip([0, "01:36"]);
+skip([1, "01:35"]);
 skip([0, "01:28"], ["20:28", "21:56"]);

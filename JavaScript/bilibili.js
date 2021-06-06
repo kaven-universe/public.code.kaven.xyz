@@ -4,16 +4,16 @@
  * @website:     http://blog.kaven.xyz
  * @file:        [Kaven-Common] /JavaScript/bilibili.js
  * @create:      2021-06-05 10:33:40.467
- * @modify:      2021-06-06 08:02:11.014
+ * @modify:      2021-06-06 15:05:24.984
  * @version:     
- * @times:       14
- * @lines:       155
+ * @times:       16
+ * @lines:       164
  * @copyright:   Copyright © 2021 Kaven. All Rights Reserved.
  * @description: [description]
  * @license:     [license]
  ********************************************************************/
 
-const EVENTS = {
+/*
     VIDEO_MEDIA_ENTER: "video_media_enter",
     VIDEO_MEDIA_PLAY: "video_media_play",
     VIDEO_MEDIA_PLAYING: "video_media_playing",
@@ -78,17 +78,16 @@ const EVENTS = {
     PLAYER_RELOAD: "player_reload",
     PLAYER_RELOADED: "player_reloaded",
     PLAYER_SEND: "player_send"
-};
+*/
 
 function skip(...fromToPairs) {
 
-    const interval = 1000; // ms
-    let skip = false;
-
-    function seekEnd() {
-        window.player.removeEventListener(EVENTS.VIDEO_MEDIA_SEEK_END, seekEnd, false);
-        skip = false;
-    }
+    const options = {
+        interval: 1000, // ms
+        skip: false,
+        currentTime: undefined,
+        player: undefined,
+    };
 
     function parseSeconds(time) {
         if (typeof time === "string") {
@@ -126,11 +125,13 @@ function skip(...fromToPairs) {
             return;
         }
 
-        let currentTime = window.player.getCurrentTime();
-        if (currentTime >= fromSeconds && currentTime < toSeconds) {
+        if (options.currentTime >= fromSeconds && options.currentTime < toSeconds) {
             console.log(`seek from ${from} to ${to}, ${fromSeconds} -> ${toSeconds}`);
-            skip = true;
-            window.player.addEventListener(EVENTS.VIDEO_MEDIA_SEEK_END, seekEnd, false);
+            options.skip = true;
+            window.player.addEventListener("video_media_seek_end", () => options.skip = false, {
+                capture: false,
+                once: true
+            });
             return window.player.seek(toSeconds);
         }
     }
@@ -142,12 +143,20 @@ function skip(...fromToPairs) {
 
     if (fromToPairs.length > 0) {
         window.kavenSkipTimer = setInterval(() => {
-            if (skip) {
+            if (options.player !== window.player) {
+                console.log("player changed");
+                options.player = window.player;
                 return;
             }
 
+            if (options.skip) {
+                return;
+            }
+
+            options.currentTime = window.player.getCurrentTime();
+
             fromToPairs.forEach(p => seek(p[0], p[1]))
-        }, interval);
+        }, options.interval);
     }
 }
 

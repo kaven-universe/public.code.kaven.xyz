@@ -4,10 +4,10 @@
  * @website:     http://blog.kaven.xyz
  * @file:        [Kaven-Common] /JavaScript/bilibili.js
  * @create:      2021-06-05 10:33:40.467
- * @modify:      2021-06-14 19:01:06.805
+ * @modify:      2021-06-14 19:09:30.950
  * @version:     
- * @times:       20
- * @lines:       173
+ * @times:       21
+ * @lines:       176
  * @copyright:   Copyright © 2021 Kaven. All Rights Reserved.
  * @description: [description]
  * @license:     [license]
@@ -169,5 +169,7 @@ function skip(...fromToPairs) {
     }
 }
 
-skip([0.1, "01:42"]);
-// skip([0, "01:28"], ["20:28", "21:56"]);
+if (document.querySelector("#media_module > div > a")?.text?.includes("名侦探柯南")) {
+    skip([0.1, "01:42"]);
+    // skip([0, "01:28"], ["20:28", "21:56"]);
+}

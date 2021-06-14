@@ -4,10 +4,10 @@
  * @website:     http://blog.kaven.xyz
  * @file:        [Kaven-Common] /JavaScript/bilibili.js
  * @create:      2021-06-05 10:33:40.467
- * @modify:      2021-06-14 14:23:31.015
+ * @modify:      2021-06-14 19:01:06.805
  * @version:     
- * @times:       18
- * @lines:       164
+ * @times:       20
+ * @lines:       173
  * @copyright:   Copyright © 2021 Kaven. All Rights Reserved.
  * @description: [description]
  * @license:     [license]
@@ -143,19 +143,28 @@ function skip(...fromToPairs) {
 
     if (fromToPairs.length > 0) {
         window.kavenSkipTimer = setInterval(() => {
-            if (options.player !== window.player) {
-                console.log("player changed");
-                options.player = window.player;
-                return;
+            try {
+                if (!window.player) {
+                    console.warn("window.player is ", window.player);
+                    return;
+                }
+
+                if (options.player !== window.player) {
+                    console.log("player changed");
+                    options.player = window.player;
+                    return;
+                }
+
+                if (options.skip) {
+                    return;
+                }
+
+                options.currentTime = window.player.getCurrentTime();
+
+                fromToPairs.forEach(p => seek(p[0], p[1]));
+            } catch (ex) {
+                console.error(ex);
             }
-
-            if (options.skip) {
-                return;
-            }
-
-            options.currentTime = window.player.getCurrentTime();
-
-            fromToPairs.forEach(p => seek(p[0], p[1]))
         }, options.interval);
     }
 }

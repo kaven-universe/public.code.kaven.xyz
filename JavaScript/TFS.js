@@ -4,10 +4,10 @@
  * @website:     http://blog.kaven.xyz
  * @file:        [Kaven-Common] /JavaScript/TFS.js
  * @create:      2021-06-10 10:39:48.020
- * @modify:      2021-06-16 19:49:05.522
+ * @modify:      2021-06-16 19:51:31.728
  * @version:     
- * @times:       19
- * @lines:       72
+ * @times:       20
+ * @lines:       77
  * @copyright:   Copyright © 2021 Kaven. All Rights Reserved.
  * @description: [description]
  * @license:     [license]
@@ -27,7 +27,7 @@ function CopyChangesetString() {
     copy(str);
 }
 
-async function GenerateDailyWorkReport() {
+async function GenerateDailyWorkReport(onlyWorkItems) {
     const changesets = GetChangesets();
     console.log(changesets);
 
@@ -46,6 +46,11 @@ async function GenerateDailyWorkReport() {
                     lines.add(`${item.workItemType} ${item.id}: ${item.title}`);
                 }
             } else {
+
+                if (onlyWorkItems === true) {
+                    continue;
+                }
+
                 url.pathname = url.pathname.substring(0, url.pathname.lastIndexOf("/workItems"));
                 const r2 = await fetch(url);
                 if (r2.ok) {
@@ -62,10 +67,10 @@ async function GenerateDailyWorkReport() {
     return Array.from(lines).join("\n");
 }
 
-function CopyDailyWorkReport() {
+function CopyDailyWorkReport(onlyWorkItems) {
     const _copy = copy;
     (async () => {
-        const report = await GenerateDailyWorkReport();
+        const report = await GenerateDailyWorkReport(onlyWorkItems);
         console.log(report);
         _copy(report);
     })()

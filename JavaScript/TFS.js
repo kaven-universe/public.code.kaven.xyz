@@ -4,9 +4,9 @@
  * @website:     http://blog.kaven.xyz
  * @file:        [Kaven-Common] /JavaScript/TFS.js
  * @create:      2021-06-10 10:39:48.020
- * @modify:      2021-06-16 19:46:42.404
+ * @modify:      2021-06-16 19:49:05.522
  * @version:     
- * @times:       18
+ * @times:       19
  * @lines:       72
  * @copyright:   Copyright © 2021 Kaven. All Rights Reserved.
  * @description: [description]
@@ -31,7 +31,7 @@ async function GenerateDailyWorkReport() {
     const changesets = GetChangesets();
     console.log(changesets);
 
-    const lines = [];
+    const lines = new Set();
     for (const changeset of changesets) {
         // Retrieves the work items associated with a particular changeset.
         // https://docs.microsoft.com/en-us/rest/api/azure/devops/tfvc/changesets/get%20changeset%20work%20items?view=azure-devops-rest-6.0
@@ -43,23 +43,23 @@ async function GenerateDailyWorkReport() {
             const j = await r.json();
             if (j.count > 0) {
                 for (const item of j.value) {
-                    lines.push(`${item.workItemType} ${item.id}: ${item.title}`);
+                    lines.add(`${item.workItemType} ${item.id}: ${item.title}`);
                 }
             } else {
                 url.pathname = url.pathname.substring(0, url.pathname.lastIndexOf("/workItems"));
                 const r2 = await fetch(url);
                 if (r2.ok) {
                     const j2 = await r2.json();
-                    lines.push(j2.comment);
+                    lines.add(j2.comment);
                 }
             }
         }
     }
 
-    lines.push("\n");
-    lines.push(`变更集：${changesets.join(", ")}`);
+    lines.add("\n");
+    lines.add(`变更集：${changesets.join(", ")}`);
 
-    return lines.join("\n");
+    return Array.from(lines).join("\n");
 }
 
 function CopyDailyWorkReport() {

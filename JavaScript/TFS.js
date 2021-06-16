@@ -4,9 +4,9 @@
  * @website:     http://blog.kaven.xyz
  * @file:        [Kaven-Common] /JavaScript/TFS.js
  * @create:      2021-06-10 10:39:48.020
- * @modify:      2021-06-16 19:19:45.520
+ * @modify:      2021-06-16 19:20:40.096
  * @version:     
- * @times:       6
+ * @times:       7
  * @lines:       62
  * @copyright:   Copyright © 2021 Kaven. All Rights Reserved.
  * @description: [description]
@@ -35,7 +35,7 @@ async function GenerateDailyWorkReport() {
     for (const changeset of changesets) {
         // Retrieves the work items associated with a particular changeset.
         // https://docs.microsoft.com/en-us/rest/api/azure/devops/tfvc/changesets/get%20changeset%20work%20items?view=azure-devops-rest-6.0
-        const url = new URL(location.href.replace("/_versionControl/", "/_apis/"));
+        const url = new URL(location.href.replace("/_versionControl/", "/_apis/tfvc/"));
         url.pathname += `/${changeset}/workItems`;
 
         const r = await fetch(url);

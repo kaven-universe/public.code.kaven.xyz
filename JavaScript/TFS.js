@@ -4,9 +4,9 @@
  * @website:     http://blog.kaven.xyz
  * @file:        [Kaven-Common] /JavaScript/TFS.js
  * @create:      2021-06-10 10:39:48.020
- * @modify:      2021-06-16 19:35:20.002
+ * @modify:      2021-06-16 19:37:03.682
  * @version:     
- * @times:       15
+ * @times:       16
  * @lines:       64
  * @copyright:   Copyright © 2021 Kaven. All Rights Reserved.
  * @description: [description]
@@ -55,10 +55,10 @@ async function GenerateDailyWorkReport() {
 }
 
 function CopyDailyWorkReport() {
-    let report = "";
+    const _copy = copy;
     (async () => {
-        let report = await GenerateDailyWorkReport();
+        const report = await GenerateDailyWorkReport();
         console.log(report);
+        _copy(report);
     })()
-    copy(report);
 }

@@ -4,14 +4,16 @@
  * @website:     http://blog.kaven.xyz
  * @file:        [Kaven-Common] /JavaScript/TFS.js
  * @create:      2021-06-10 10:39:48.020
- * @modify:      2021-06-16 19:25:31.377
+ * @modify:      2021-06-16 19:27:17.937
  * @version:     
- * @times:       10
- * @lines:       61
+ * @times:       11
+ * @lines:       63
  * @copyright:   Copyright © 2021 Kaven. All Rights Reserved.
  * @description: [description]
  * @license:     [license]
  ********************************************************************/
+
+const Copy = copy;
 
 function GetChangesets() {
     return $(".group-results:first").find(".change-info").map(function () { return $(this).attr("title").split(" ")[0]; }).get();
@@ -57,5 +59,5 @@ async function GenerateDailyWorkReport() {
 async function CopyDailyWorkReport() {
     const report = await GenerateDailyWorkReport();
     console.log(report);
-    window.copy(report);
+    Copy(report);
 }

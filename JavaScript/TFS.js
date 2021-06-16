@@ -4,17 +4,17 @@
  * @website:     http://blog.kaven.xyz
  * @file:        [Kaven-Common] /JavaScript/TFS.js
  * @create:      2021-06-10 10:39:48.020
- * @modify:      2021-06-16 19:14:43.728
+ * @modify:      2021-06-16 19:18:26.113
  * @version:     
- * @times:       3
- * @lines:       60
+ * @times:       4
+ * @lines:       62
  * @copyright:   Copyright © 2021 Kaven. All Rights Reserved.
  * @description: [description]
  * @license:     [license]
  ********************************************************************/
 
- function GetChangesets() {
-    return $(".group-results:first").find(".change-info").map(function(){ return $(this).attr("title").split(" ")[0]; }).get();
+function GetChangesets() {
+    return $(".group-results:first").find(".change-info").map(function () { return $(this).attr("title").split(" ")[0]; }).get();
 }
 
 function GetChangesetString() {
@@ -29,6 +29,8 @@ function CopyChangesetString() {
 
 async function GenerateDailyWorkReport() {
     const changesets = GetChangesets();
+    console.log(changesets);
+    
     const lines = [];
     for (const changeset of changesets) {
         // Retrieves the work items associated with a particular changeset.

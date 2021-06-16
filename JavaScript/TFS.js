@@ -4,10 +4,10 @@
  * @website:     http://blog.kaven.xyz
  * @file:        [Kaven-Common] /JavaScript/TFS.js
  * @create:      2021-06-10 10:39:48.020
- * @modify:      2021-06-16 19:38:35.651
+ * @modify:      2021-06-16 19:46:42.404
  * @version:     
- * @times:       17
- * @lines:       67
+ * @times:       18
+ * @lines:       72
  * @copyright:   Copyright © 2021 Kaven. All Rights Reserved.
  * @description: [description]
  * @license:     [license]
@@ -46,12 +46,17 @@ async function GenerateDailyWorkReport() {
                     lines.push(`${item.workItemType} ${item.id}: ${item.title}`);
                 }
             } else {
-                // TODO: maybe add changeset comment
+                url.pathname = url.pathname.substring(0, url.pathname.lastIndexOf("/workItems"));
+                const r2 = await fetch(url);
+                if (r2.ok) {
+                    const j2 = await r2.json();
+                    lines.push(j2.comment);
+                }
             }
         }
     }
 
-    lines.push("\n\n");
+    lines.push("\n");
     lines.push(`变更集：${changesets.join(", ")}`);
 
     return lines.join("\n");

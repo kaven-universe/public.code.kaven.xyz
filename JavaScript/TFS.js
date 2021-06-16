@@ -4,10 +4,10 @@
  * @website:     http://blog.kaven.xyz
  * @file:        [Kaven-Common] /JavaScript/TFS.js
  * @create:      2021-06-10 10:39:48.020
- * @modify:      2021-06-16 19:20:40.096
+ * @modify:      2021-06-16 19:22:22.849
  * @version:     
- * @times:       7
- * @lines:       62
+ * @times:       9
+ * @lines:       61
  * @copyright:   Copyright © 2021 Kaven. All Rights Reserved.
  * @description: [description]
  * @license:     [license]
@@ -30,7 +30,7 @@ function CopyChangesetString() {
 async function GenerateDailyWorkReport() {
     const changesets = GetChangesets();
     console.log(changesets);
-    
+
     const lines = [];
     for (const changeset of changesets) {
         // Retrieves the work items associated with a particular changeset.
@@ -43,7 +43,7 @@ async function GenerateDailyWorkReport() {
             const j = await r.json();
             if (j.count > 0) {
                 for (const item of j.value) {
-                    lines.push(`${j.workItemType} ${j.id}: ${j.title}`);
+                    lines.push(`${item.workItemType} ${item.id}: ${item.title}`);
                 }
             } else {
                 // TODO: maybe add changeset comment
@@ -54,9 +54,8 @@ async function GenerateDailyWorkReport() {
     return lines.join("\n");
 }
 
-function CopyDailyWorkReport() {
-    GenerateDailyWorkReport().then(report => {
-        console.log(report);
-        copy(report);
-    });
+async function CopyDailyWorkReport() {
+    const report = await GenerateDailyWorkReport();
+    console.log(report);
+    copy(report);
 }

@@ -4,10 +4,10 @@
  * @website:     http://blog.kaven.xyz
  * @file:        [Kaven-Common] /JavaScript/bilibili.js
  * @create:      2021-06-05 10:33:40.467
- * @modify:      2021-06-21 20:53:41.861
+ * @modify:      2021-06-21 20:54:46.452
  * @version:     
- * @times:       24
- * @lines:       191
+ * @times:       25
+ * @lines:       193
  * @copyright:   Copyright © 2021 Kaven. All Rights Reserved.
  * @description: [description]
  * @license:     [license]
@@ -174,6 +174,8 @@ function main() {
     if (document.querySelector("#media_module > div > a")?.text?.includes("名侦探柯南")) {
         const name = document.querySelector("#eplist_module > div.list-wrapper.longlist > ul > li.ep-item.cursor.visited > span")?.textContent;
         if (name) {
+            console.log("play: ", name);
+
             const index = parseInt(name.replace(/\D/g, ''));
 
             if (index >= 319) {

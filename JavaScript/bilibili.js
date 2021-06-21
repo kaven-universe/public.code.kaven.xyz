@@ -4,10 +4,10 @@
  * @website:     http://blog.kaven.xyz
  * @file:        [Kaven-Common] /JavaScript/bilibili.js
  * @create:      2021-06-05 10:33:40.467
- * @modify:      2021-06-21 21:00:18.762
+ * @modify:      2021-06-21 21:13:41.471
  * @version:     
- * @times:       26
- * @lines:       197
+ * @times:       27
+ * @lines:       213
  * @copyright:   Copyright © 2021 Kaven. All Rights Reserved.
  * @description: [description]
  * @license:     [license]
@@ -172,7 +172,23 @@ function skip(...fromToPairs) {
 
 function main() {
     if (document.querySelector("#media_module > div > a")?.text?.includes("名侦探柯南")) {
-        const name = document.querySelector("#eplist_module > div.list-wrapper.longlist > ul > li.ep-item.cursor.visited > span")?.textContent;
+        const selectors = [
+            "head > title",
+            "#bilibiliPlayer > div.bilibili-player-area.progress-shadow-show > div.bilibili-player-video-wrap > div.bilibili-player-video-top.bilibili-player-video-top-pgc > div.bilibili-player-video-top-title",
+            "#bilibiliPlayer > div.bilibili-player-area.video-state-pause.progress-shadow-show > div.bilibili-player-video-wrap > div.bilibili-player-video-control-wrap > div.bilibili-player-video-control > div.bilibili-player-video-control-bottom > div.bilibili-player-video-control-bottom-right > div.bilibili-player-video-btn.bilibili-player-video-btn-pagelist.bilibili-player-show > div > ul > li.bilibili-player-video-btn-menu-list.bilibili-player-active.bilibili-player-blink",
+            "#app > div.plp-l > div.media-wrapper > h1",
+            "#eplist_module > div.list-wrapper.longlist > ul > li.ep-item.cursor.visited > span"
+        ]
+
+        let name;
+
+        for (const s of selectors) {
+            name = document.querySelector(s)?.textContent;
+            if (name) {
+                break;
+            }
+        }
+
         if (name) {
             console.log("play: ", name);
 

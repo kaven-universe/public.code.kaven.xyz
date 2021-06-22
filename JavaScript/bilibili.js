@@ -4,10 +4,10 @@
  * @website:     http://blog.kaven.xyz
  * @file:        [Kaven-Common] /JavaScript/bilibili.js
  * @create:      2021-06-05 10:33:40.467
- * @modify:      2021-06-21 21:13:41.471
+ * @modify:      2021-06-22 19:24:06.338
  * @version:     
- * @times:       27
- * @lines:       213
+ * @times:       28
+ * @lines:       216
  * @copyright:   Copyright © 2021 Kaven. All Rights Reserved.
  * @description: [description]
  * @license:     [license]
@@ -205,8 +205,11 @@ function main() {
     }
 }
 
-if (document.readyState === "complete") {
-    main();
-} else {
-    document.addEventListener("DOMContentLoaded", main, false);
-}
+const i = setInterval(() => {
+    if (document.readyState === "complete") {
+        clearInterval(i);
+        
+        main();
+    }
+}, 1000)
+

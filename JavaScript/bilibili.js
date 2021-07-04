@@ -4,10 +4,10 @@
  * @website:     http://blog.kaven.xyz
  * @file:        [Kaven-Common] /JavaScript/bilibili.js
  * @create:      2021-06-05 10:33:40.467
- * @modify:      2021-07-04 22:26:44.225
+ * @modify:      2021-07-04 22:51:59.642
  * @version:     
- * @times:       29
- * @lines:       219
+ * @times:       30
+ * @lines:       221
  * @copyright:   Copyright © 2021 Kaven. All Rights Reserved.
  * @description: [description]
  * @license:     [license]
@@ -194,11 +194,13 @@ function main() {
 
             const index = parseInt(name.replace(/\D/g, ''));
 
+            if (index >= 600) {
+                skip(["01:52", "03:18"]);
+                return;
+            }
+
             if (index >= 319) {
                 skip([0.1, "01:52"]);
-                return;
-            } else if (index >= 600) {
-                skip([0.1, "03:18"]);
                 return;
             }
         }

@@ -1,0 +1,6 @@
+{
+	"devDependencies": {
+		"@wenkai.wu/eslint-config": "^1.0.5",
+		"eslint": "^7.30.0"
+	}
+}

@@ -4,14 +4,43 @@
  * @website:     http://blog.kaven.xyz
  * @file:        [Kaven-Common] /JavaScript/bilibili.js
  * @create:      2021-06-05 10:33:40.467
- * @modify:      2021-07-04 22:51:59.642
+ * @modify:      2021-07-07 07:49:27.323
  * @version:     
- * @times:       30
- * @lines:       221
+ * @times:       34
+ * @lines:       263
  * @copyright:   Copyright © 2021 Kaven. All Rights Reserved.
  * @description: [description]
  * @license:     [license]
  ********************************************************************/
+
+function cnNow() {
+    const today = new Date();
+    const chinese = ["〇", "一", "二", "三", "四", "五", "六", "七", "八", "九"];
+    const y = today.getFullYear().toString();
+    const m = (today.getMonth() + 1).toString();
+    const d = today.getDate().toString();
+    let result = "";
+    for (let i = 0; i < y.length; i++) {
+        result += chinese[y.charAt(i)];
+    }
+    result += "年";
+    if (m.length == 2) {
+        if (m.charAt(0) == "1") {
+            result += ("十" + chinese[m.charAt(1)] + "月");
+        }
+    }
+    else {
+        result += (chinese[m.charAt(0)] + "月");
+    }
+    if (d.length == 2) {
+        result += (chinese[d.charAt(0)] + "十" + chinese[d.charAt(1)] + "日");
+    }
+    else {
+        result += (chinese[d.charAt(0)] + "日");
+    }
+
+    return result;
+}
 
 /*
     VIDEO_MEDIA_ENTER: "video_media_enter",
@@ -130,7 +159,7 @@ function skip(...fromToPairs) {
             options.skip = true;
             window.player.addEventListener("video_media_seek_end", () => options.skip = false, {
                 capture: false,
-                once: true
+                once: true,
             });
             return window.player.seek(toSeconds);
         }
@@ -171,14 +200,27 @@ function skip(...fromToPairs) {
 
 
 function main() {
+    setTimeout(() => {
+        const input = document.querySelector("#bilibiliPlayer > div.bilibili-player-area.progress-shadow-show > div.bilibili-player-video-bottom-area > div > div.bilibili-player-video-danmaku-root > div.bilibili-player-video-inputbar.focus > div > input");
+        if (input) {
+            input.textContent = cnNow();
+
+            const sendButton = document.querySelector("#bilibiliPlayer > div.bilibili-player-area.progress-shadow-show > div.bilibili-player-video-bottom-area > div > div.bilibili-player-video-danmaku-root > div.bilibili-player-video-inputbar.focus > button");
+            if (sendButton) {
+                sendButton.click();
+            }
+        }
+    }, 5000);
+
+
     if (document.querySelector("#media_module > div > a")?.text?.includes("名侦探柯南")) {
         const selectors = [
             "head > title",
             "#bilibiliPlayer > div.bilibili-player-area.progress-shadow-show > div.bilibili-player-video-wrap > div.bilibili-player-video-top.bilibili-player-video-top-pgc > div.bilibili-player-video-top-title",
             "#bilibiliPlayer > div.bilibili-player-area.video-state-pause.progress-shadow-show > div.bilibili-player-video-wrap > div.bilibili-player-video-control-wrap > div.bilibili-player-video-control > div.bilibili-player-video-control-bottom > div.bilibili-player-video-control-bottom-right > div.bilibili-player-video-btn.bilibili-player-video-btn-pagelist.bilibili-player-show > div > ul > li.bilibili-player-video-btn-menu-list.bilibili-player-active.bilibili-player-blink",
             "#app > div.plp-l > div.media-wrapper > h1",
-            "#eplist_module > div.list-wrapper.longlist > ul > li.ep-item.cursor.visited > span"
-        ]
+            "#eplist_module > div.list-wrapper.longlist > ul > li.ep-item.cursor.visited > span",
+        ];
 
         let name;
 
@@ -192,7 +234,7 @@ function main() {
         if (name) {
             console.log("play: ", name);
 
-            const index = parseInt(name.replace(/\D/g, ''));
+            const index = parseInt(name.replace(/\D/g, ""));
 
             if (index >= 600) {
                 skip(["01:52", "03:18"]);
@@ -213,8 +255,8 @@ function main() {
 const i = setInterval(() => {
     if (document.readyState === "complete") {
         clearInterval(i);
-        
+
         main();
     }
-}, 1000)
+}, 1000);
 

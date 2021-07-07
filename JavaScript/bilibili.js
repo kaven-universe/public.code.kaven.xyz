@@ -4,10 +4,10 @@
  * @website:     http://blog.kaven.xyz
  * @file:        [Kaven-Common] /JavaScript/bilibili.js
  * @create:      2021-06-05 10:33:40.467
- * @modify:      2021-07-07 08:15:52.556
+ * @modify:      2021-07-07 18:52:01.409
  * @version:     
- * @times:       43
- * @lines:       278
+ * @times:       44
+ * @lines:       277
  * @copyright:   Copyright © 2021 Kaven. All Rights Reserved.
  * @description: [description]
  * @license:     [license]
@@ -50,8 +50,8 @@ function send() {
             const e = new Event("input");
             e.myself = true;
             input.dispatchEvent(e);
- 
-            
+
+
 
             setTimeout(() => {
                 const sendButton = document.querySelector("#bilibiliPlayer > div.bilibili-player-area.progress-shadow-show > div.bilibili-player-video-bottom-area > div > div.bilibili-player-video-danmaku-root > div.bilibili-player-video-inputbar.focus > button");
@@ -205,9 +205,6 @@ function skip(...fromToPairs) {
                 if (options.player !== window.player) {
                     console.log("player changed");
                     options.player = window.player;
-
-                    send();
-
                     return;
                 }
 
@@ -218,6 +215,8 @@ function skip(...fromToPairs) {
                 options.currentTime = window.player.getCurrentTime();
 
                 fromToPairs.forEach(p => seek(p[0], p[1]));
+                
+                send();
             } catch (ex) {
                 console.error(ex);
             }

@@ -4,10 +4,10 @@
  * @website:     http://blog.kaven.xyz
  * @file:        [Kaven-Common] /JavaScript/bilibili.js
  * @create:      2021-06-05 10:33:40.467
- * @modify:      2021-07-07 07:56:24.598
+ * @modify:      2021-07-07 08:00:29.836
  * @version:     
- * @times:       37
- * @lines:       265
+ * @times:       38
+ * @lines:       270
  * @copyright:   Copyright © 2021 Kaven. All Rights Reserved.
  * @description: [description]
  * @license:     [license]
@@ -40,6 +40,22 @@ function cnNow() {
     }
 
     return result;
+}
+
+function send() {
+    setTimeout(() => {
+        const input = document.querySelector("#bilibiliPlayer > div.bilibili-player-area.progress-shadow-show > div.bilibili-player-video-bottom-area > div > div.bilibili-player-video-danmaku-root > div.bilibili-player-video-inputbar.focus > div > input");
+        if (input) {
+            input.value = `${cnNow()} [${new Date().toUTCString()}]`;
+
+            setTimeout(() => {
+                const sendButton = document.querySelector("#bilibiliPlayer > div.bilibili-player-area.progress-shadow-show > div.bilibili-player-video-bottom-area > div > div.bilibili-player-video-danmaku-root > div.bilibili-player-video-inputbar.focus > button");
+                if (sendButton) {
+                    sendButton.click();
+                }
+            }, 5000);
+        }
+    }, 5000);
 }
 
 /*
@@ -181,6 +197,9 @@ function skip(...fromToPairs) {
                 if (options.player !== window.player) {
                     console.log("player changed");
                     options.player = window.player;
+
+                    send();
+
                     return;
                 }
 
@@ -200,20 +219,6 @@ function skip(...fromToPairs) {
 
 
 function main() {
-    setTimeout(() => {
-        const input = document.querySelector("#bilibiliPlayer > div.bilibili-player-area.progress-shadow-show > div.bilibili-player-video-bottom-area > div > div.bilibili-player-video-danmaku-root > div.bilibili-player-video-inputbar.focus > div > input");
-        if (input) {
-            input.value = `${cnNow()} [${new Date().toUTCString()}]`;
-
-            setTimeout(() => {
-                const sendButton = document.querySelector("#bilibiliPlayer > div.bilibili-player-area.progress-shadow-show > div.bilibili-player-video-bottom-area > div > div.bilibili-player-video-danmaku-root > div.bilibili-player-video-inputbar.focus > button");
-                if (sendButton) {
-                    sendButton.click();
-                }
-            }, 5000);
-        }
-    }, 5000);
-
 
     if (document.querySelector("#media_module > div > a")?.text?.includes("名侦探柯南")) {
         const selectors = [

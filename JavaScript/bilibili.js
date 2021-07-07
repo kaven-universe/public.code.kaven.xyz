@@ -4,9 +4,9 @@
  * @website:     http://blog.kaven.xyz
  * @file:        [Kaven-Common] /JavaScript/bilibili.js
  * @create:      2021-06-05 10:33:40.467
- * @modify:      2021-07-07 21:39:23.811
+ * @modify:      2021-07-07 21:40:10.325
  * @version:     
- * @times:       47
+ * @times:       48
  * @lines:       290
  * @copyright:   Copyright © 2021 Kaven. All Rights Reserved.
  * @description: [description]
@@ -46,7 +46,7 @@ function send() {
     setTimeout(() => {
         const input = document.querySelector("#bilibiliPlayer > div.bilibili-player-area.progress-shadow-show > div.bilibili-player-video-bottom-area > div > div.bilibili-player-video-danmaku-root > div.bilibili-player-video-inputbar.focus > div > input");
         if (input) {
-            input.value = `${cnNow()} [${new Date().toLocaleTimeString()}]`;
+            input.value = `${cnNow()} ${new Date().toLocaleTimeString()}`;
             const e = new Event("input");
             e.myself = true;
             input.dispatchEvent(e);

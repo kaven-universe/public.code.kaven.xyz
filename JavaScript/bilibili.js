@@ -4,10 +4,10 @@
  * @website:     http://blog.kaven.xyz
  * @file:        [Kaven-Common] /JavaScript/bilibili.js
  * @create:      2021-06-05 10:33:40.467
- * @modify:      2021-07-07 18:52:01.409
+ * @modify:      2021-07-07 21:35:01.868
  * @version:     
- * @times:       44
- * @lines:       277
+ * @times:       45
+ * @lines:       292
  * @copyright:   Copyright © 2021 Kaven. All Rights Reserved.
  * @description: [description]
  * @license:     [license]
@@ -215,8 +215,6 @@ function skip(...fromToPairs) {
                 options.currentTime = window.player.getCurrentTime();
 
                 fromToPairs.forEach(p => seek(p[0], p[1]));
-                
-                send();
             } catch (ex) {
                 console.error(ex);
             }
@@ -224,10 +222,27 @@ function skip(...fromToPairs) {
     }
 }
 
+function getName() {
+    return document.querySelector("#media_module > div > a")?.text;
+}
 
 function main() {
 
-    if (document.querySelector("#media_module > div > a")?.text?.includes("名侦探柯南")) {
+    let name = getName();
+
+    setInterval(() => {
+        const newName = getName();
+
+        if (name !== newName) {
+            name = newName;
+            console.log(`play new: ${name}`);
+            send();
+        }
+    }, 5000);
+
+    send();
+
+    if (name?.includes("名侦探柯南")) {
         const selectors = [
             "head > title",
             "#bilibiliPlayer > div.bilibili-player-area.progress-shadow-show > div.bilibili-player-video-wrap > div.bilibili-player-video-top.bilibili-player-video-top-pgc > div.bilibili-player-video-top-title",

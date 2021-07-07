@@ -4,10 +4,10 @@
  * @website:     http://blog.kaven.xyz
  * @file:        [Kaven-Common] /JavaScript/bilibili.js
  * @create:      2021-06-05 10:33:40.467
- * @modify:      2021-07-07 21:35:01.868
+ * @modify:      2021-07-07 21:36:17.026
  * @version:     
- * @times:       45
- * @lines:       292
+ * @times:       46
+ * @lines:       290
  * @copyright:   Copyright © 2021 Kaven. All Rights Reserved.
  * @description: [description]
  * @license:     [license]
@@ -46,12 +46,10 @@ function send() {
     setTimeout(() => {
         const input = document.querySelector("#bilibiliPlayer > div.bilibili-player-area.progress-shadow-show > div.bilibili-player-video-bottom-area > div > div.bilibili-player-video-danmaku-root > div.bilibili-player-video-inputbar.focus > div > input");
         if (input) {
-            input.value = `${cnNow()} [${new Date().toUTCString()}]`;
+            input.value = `${cnNow()} [${new Date().toLocaleString()}]`;
             const e = new Event("input");
             e.myself = true;
             input.dispatchEvent(e);
-
-
 
             setTimeout(() => {
                 const sendButton = document.querySelector("#bilibiliPlayer > div.bilibili-player-area.progress-shadow-show > div.bilibili-player-video-bottom-area > div > div.bilibili-player-video-danmaku-root > div.bilibili-player-video-inputbar.focus > button");

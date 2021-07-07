@@ -4,10 +4,10 @@
  * @website:     http://blog.kaven.xyz
  * @file:        [Kaven-Common] /JavaScript/bilibili.js
  * @create:      2021-06-05 10:33:40.467
- * @modify:      2021-07-07 21:40:10.325
+ * @modify:      2021-07-07 21:46:38.932
  * @version:     
- * @times:       48
- * @lines:       290
+ * @times:       50
+ * @lines:       306
  * @copyright:   Copyright © 2021 Kaven. All Rights Reserved.
  * @description: [description]
  * @license:     [license]
@@ -42,11 +42,27 @@ function cnNow() {
     return result;
 }
 
+function cnWeek() {
+    const d = new Date();
+    const weekday = new Array(7);
+    weekday[0] = "周日"; //"Sunday";
+    weekday[1] = "周一"; //"Monday";
+    weekday[2] = "周二"; //"Tuesday";
+    weekday[3] = "周三"; //"Wednesday";
+    weekday[4] = "周四"; //"Thursday";
+    weekday[5] = "周五"; //"Friday";
+    weekday[6] = "周六"; //"Saturday";
+
+    const n = weekday[d.getDay()];
+
+    return n;
+}
+
 function send() {
     setTimeout(() => {
         const input = document.querySelector("#bilibiliPlayer > div.bilibili-player-area.progress-shadow-show > div.bilibili-player-video-bottom-area > div > div.bilibili-player-video-danmaku-root > div.bilibili-player-video-inputbar.focus > div > input");
         if (input) {
-            input.value = `${cnNow()} ${new Date().toLocaleTimeString()}`;
+            input.value = `${cnNow()} ${cnWeek()} ${new Date().toLocaleTimeString()}`;
             const e = new Event("input");
             e.myself = true;
             input.dispatchEvent(e);

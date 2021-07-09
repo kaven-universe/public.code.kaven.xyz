@@ -4,9 +4,9 @@
  * @website:     http://blog.kaven.xyz
  * @file:        [Kaven-Common] /JavaScript/bilibili.js
  * @create:      2021-06-05 10:33:40.467
- * @modify:      2021-07-09 21:48:03.201
+ * @modify:      2021-07-09 21:48:37.853
  * @version:     
- * @times:       51
+ * @times:       52
  * @lines:       306
  * @copyright:   Copyright © 2021 Kaven. All Rights Reserved.
  * @description: [description]
@@ -280,7 +280,7 @@ function main() {
             const index = parseInt(name.replace(/\D/g, ""));
 
             if (index >= 600) {
-                skip(["01:50", "03:08"]);
+                skip(["01:50", "03:45"]);
                 return;
             }
 

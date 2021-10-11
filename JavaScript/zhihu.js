@@ -4,17 +4,16 @@
  * @website:     http://blog.kaven.xyz
  * @file:        [Kaven-Common] /JavaScript/zhihu.js
  * @create:      2021-10-11 11:20:31.863
- * @modify:      2021-10-11 13:58:12.507
+ * @modify:      2021-10-11 14:10:40.408
  * @version:     
- * @times:       10
- * @lines:       67
+ * @times:       11
+ * @lines:       78
  * @copyright:   Copyright © 2021 Kaven. All Rights Reserved.
  * @description: [description]
  * @license:     [license]
  ********************************************************************/
 
 function main() {
-    console.log("kaven script loaded");
 
     // hide login
     document.querySelector("body > div:nth-child(14) > div > div > div > div.Modal.Modal--default.signFlowModal > button").click();
@@ -33,28 +32,40 @@ function main() {
         windowOpen(url, name, features, replace);
     }
 
-    document.addEventListener("click", function (e) {
-        console.log(e);
+    /**
+     * 
+     * @param { HTMLLinkElement } target 
+     */
+    const checkLink = (target) => {
 
-        /**
-         * @type { string | undefined }
-         */
-        const tagName = e.target.tagName;
+        const tagName = target.tagName;
         if (tagName?.toLowerCase() === "a") {
 
-            /**
-             * @type { string }
-             */
-            const href = e.target.href;
+            const href = target.href;
 
             if (href) {
                 window.open(url, "_blank").focus();
-                e.preventDefault();
-            } else {
-                console.warn(e);
+                return true;
             }
         }
-    }, true);
+
+        return false;
+    }
+
+    document.addEventListener("click", function (e) {
+        console.log(e);
+
+        if (checkLink(e.target)) {
+            e.preventDefault();
+        } else {
+            const path = e.target.path;
+            if (Array.isArray(path) && path.length > 1) {
+                if (checkLink(path[path.length - 2])) {
+                    e.preventDefault();
+                }
+            }
+        }
+    });
 }
 
 const i = setInterval(() => {

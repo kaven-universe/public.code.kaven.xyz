@@ -4,9 +4,9 @@
  * @website:     http://blog.kaven.xyz
  * @file:        [Kaven-Common] /JavaScript/zhihu.js
  * @create:      2021-10-11 11:20:31.863
- * @modify:      2021-10-11 13:55:59.659
+ * @modify:      2021-10-11 13:58:12.507
  * @version:     
- * @times:       9
+ * @times:       10
  * @lines:       67
  * @copyright:   Copyright © 2021 Kaven. All Rights Reserved.
  * @description: [description]
@@ -54,7 +54,7 @@ function main() {
                 console.warn(e);
             }
         }
-    });
+    }, true);
 }
 
 const i = setInterval(() => {

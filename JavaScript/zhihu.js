@@ -4,10 +4,10 @@
  * @website:     http://blog.kaven.xyz
  * @file:        [Kaven-Common] /JavaScript/zhihu.js
  * @create:      2021-10-11 11:20:31.863
- * @modify:      2021-10-11 13:37:30.313
+ * @modify:      2021-10-11 13:41:16.358
  * @version:     
- * @times:       6
- * @lines:       60
+ * @times:       7
+ * @lines:       62
  * @copyright:   Copyright © 2021 Kaven. All Rights Reserved.
  * @description: [description]
  * @license:     [license]
@@ -45,6 +45,8 @@ function main() {
 
                 window.open(url, "_blank").focus();
                 e.preventDefault();
+            } else {
+                console.warn(e);
             }
         }
     });

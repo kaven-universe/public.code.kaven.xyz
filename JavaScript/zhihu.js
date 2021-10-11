@@ -4,9 +4,9 @@
  * @website:     http://blog.kaven.xyz
  * @file:        [Kaven-Common] /JavaScript/zhihu.js
  * @create:      2021-10-11 11:20:31.863
- * @modify:      2021-10-11 15:45:39.884
+ * @modify:      2021-10-11 15:57:29.622
  * @version:     
- * @times:       15
+ * @times:       16
  * @lines:       84
  * @copyright:   Copyright © 2021 Kaven. All Rights Reserved.
  * @description: [description]
@@ -46,7 +46,7 @@ function main() {
             const href = target.href;
 
             if (href) {
-                window.open(url, "_blank").focus();
+                window.open(href, "_blank").focus();
                 return true;
             }
         }

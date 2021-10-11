@@ -4,10 +4,10 @@
  * @website:     http://blog.kaven.xyz
  * @file:        [Kaven-Common] /JavaScript/zhihu.js
  * @create:      2021-10-11 11:20:31.863
- * @modify:      2021-10-11 16:01:12.757
+ * @modify:      2021-10-11 16:03:26.804
  * @version:     
- * @times:       17
- * @lines:       84
+ * @times:       18
+ * @lines:       86
  * @copyright:   Copyright © 2021 Kaven. All Rights Reserved.
  * @description: [description]
  * @license:     [license]
@@ -26,6 +26,8 @@ function main() {
         if (url.startsWith(prefix)) {
             url = url.substr(prefix.length);
         }
+
+        url = decodeURI(url);
 
         console.log("open: ", url);
 

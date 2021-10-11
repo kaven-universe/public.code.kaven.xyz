@@ -4,14 +4,18 @@
  * @website:     http://blog.kaven.xyz
  * @file:        [Kaven-Common] /JavaScript/zhihu.js
  * @create:      2021-10-11 11:20:31.863
- * @modify:      2021-10-11 16:07:13.429
+ * @modify:      2021-10-11 16:14:34.119
  * @version:     
- * @times:       19
- * @lines:       86
+ * @times:       21
+ * @lines:       96
  * @copyright:   Copyright © 2021 Kaven. All Rights Reserved.
  * @description: [description]
  * @license:     [license]
  ********************************************************************/
+
+function K_DEV() {
+    return "K_DEV" in window && window["K_DEV"];
+}
 
 function main() {
 
@@ -29,7 +33,9 @@ function main() {
 
         url = decodeURIComponent(url);
 
-        console.log("open: ", url);
+        if (K_DEV()) {
+            console.log("open: ", url);
+        }
 
         return windowOpen(url, name, features, replace);
     }
@@ -40,7 +46,9 @@ function main() {
      */
     const checkLink = (target) => {
 
-        console.log("check: ", target);
+        if (K_DEV()) {
+            console.log("check: ", target);
+        }
 
         const tagName = target.tagName;
         if (tagName?.toLowerCase() === "a") {
@@ -57,7 +65,9 @@ function main() {
     }
 
     document.addEventListener("click", function (e) {
-        console.log(e);
+        if (K_DEV()) {
+            console.log(e);
+        }
 
         if (checkLink(e.target)) {
             e.preventDefault();
@@ -82,4 +92,4 @@ const i = setInterval(() => {
 
         main();
     }
-}, 1000);
+}, 200);

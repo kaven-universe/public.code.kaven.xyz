@@ -4,10 +4,10 @@
  * @website:     http://blog.kaven.xyz
  * @file:        [Kaven-Common] /JavaScript/zhihu.js
  * @create:      2021-10-11 11:20:31.863
- * @modify:      2021-10-11 14:10:40.408
+ * @modify:      2021-10-11 14:11:40.936
  * @version:     
- * @times:       11
- * @lines:       78
+ * @times:       12
+ * @lines:       80
  * @copyright:   Copyright © 2021 Kaven. All Rights Reserved.
  * @description: [description]
  * @license:     [license]
@@ -37,6 +37,8 @@ function main() {
      * @param { HTMLLinkElement } target 
      */
     const checkLink = (target) => {
+
+        console.debug("check: ", target);
 
         const tagName = target.tagName;
         if (tagName?.toLowerCase() === "a") {

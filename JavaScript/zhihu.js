@@ -4,16 +4,17 @@
  * @website:     http://blog.kaven.xyz
  * @file:        [Kaven-Common] /JavaScript/zhihu.js
  * @create:      2021-10-11 11:20:31.863
- * @modify:      2021-10-11 11:24:12.855
+ * @modify:      2021-10-11 11:27:48.537
  * @version:     
- * @times:       2
- * @lines:       27
+ * @times:       3
+ * @lines:       28
  * @copyright:   Copyright © 2021 Kaven. All Rights Reserved.
  * @description: [description]
  * @license:     [license]
  ********************************************************************/
 
 function main() {
+    console.log("kaven script loaded");
     $("body > div:nth-child(14) > div > div > div > div.Modal.Modal--default.signFlowModal > button").click();
 }
 

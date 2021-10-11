@@ -4,9 +4,9 @@
  * @website:     http://blog.kaven.xyz
  * @file:        [Kaven-Common] /JavaScript/zhihu.js
  * @create:      2021-10-11 11:20:31.863
- * @modify:      2021-10-11 14:12:27.944
+ * @modify:      2021-10-11 15:42:51.868
  * @version:     
- * @times:       13
+ * @times:       14
  * @lines:       80
  * @copyright:   Copyright © 2021 Kaven. All Rights Reserved.
  * @description: [description]
@@ -60,7 +60,7 @@ function main() {
         if (checkLink(e.target)) {
             e.preventDefault();
         } else {
-            const path = e.target.path;
+            const path = e.path;
             if (Array.isArray(path) && path.length > 1) {
                 if (checkLink(path[path.length - 2])) {
                     e.preventDefault();

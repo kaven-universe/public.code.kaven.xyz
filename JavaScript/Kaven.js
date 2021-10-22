@@ -4,10 +4,10 @@
  * @website:     http://blog.kaven.xyz
  * @file:        [Kaven-Common] /JavaScript/Kaven.js
  * @create:      2021-10-11 11:20:31.863
- * @modify:      2021-10-22 18:12:07.470
+ * @modify:      2021-10-22 18:19:25.624
  * @version:     
- * @times:       31
- * @lines:       160
+ * @times:       32
+ * @lines:       163
  * @copyright:   Copyright © 2021 Kaven. All Rights Reserved.
  * @description: [description]
  * @license:     [license]
@@ -49,6 +49,7 @@ function click(selector) {
 function main() {
     const isZhihu = checkHostName("zhihu.com");
     const isCSDN = checkHostName("csdn.net");
+    const isJianshu = checkHostName("jianshu.com");
 
     /**
      * @type { Set<string> }
@@ -78,6 +79,8 @@ function main() {
 
         click("#csdn-redpack > em")
         click("#csdn-redpack > div > em");
+    } else if (isJianshu) {
+        prefixSet.add("https://link.jianshu.com/?t=");
     } else {
         return;
     }

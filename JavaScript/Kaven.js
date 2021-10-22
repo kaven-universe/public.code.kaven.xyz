@@ -4,10 +4,10 @@
  * @website:     http://blog.kaven.xyz
  * @file:        [Kaven-Common] /JavaScript/Kaven.js
  * @create:      2021-10-11 11:20:31.863
- * @modify:      2021-10-22 17:46:25.433
+ * @modify:      2021-10-22 17:57:03.612
  * @version:     
- * @times:       27
- * @lines:       137
+ * @times:       28
+ * @lines:       144
  * @copyright:   Copyright © 2021 Kaven. All Rights Reserved.
  * @description: [description]
  * @license:     [license]
@@ -44,16 +44,21 @@ function main() {
     const isZhihu = checkHostName("zhihu.com");
     const isCSDN = checkHostName("csdn.net");
 
-    let prefix = "";
+    /**
+     * @type { Set<string> }
+     */
+    const prefixSet = new Set();
 
     if (isZhihu) {
-        prefix = "https://link.zhihu.com/?target=";
+        prefixSet.add("https://link.zhihu.com/?target=");
+        prefixSet.add("https://link.zhihu.com?target=");
 
         // hide login
         click("body > div:nth-child(14) > div > div > div > div.Modal.Modal--default.signFlowModal > button");
         click("body > div:nth-child(15) > div > div > div > div.Modal.Modal--default.signFlowModal > button")
     } else if (isCSDN) {
-        prefix = "https://link.csdn.net/?target=";
+        prefixSet.add("https://link.csdn.net/?target=");
+        prefixSet.add("https://link.csdn.net?target=");
 
         // hide top bar
         click("#csdn-toolbar > div.toolbar-advert > span");
@@ -68,8 +73,10 @@ function main() {
 
     window.open = function (url, name, features, replace) {
 
-        if (url.startsWith(prefix) || url.startsWith(prefix.replace("/?", "?"))) {
-            url = url.substr(prefix.length);
+        for (const prefix of prefixSet) {
+            if (url.startsWith(prefix)) {
+                url = url.substr(prefix.length);
+            }
         }
 
         url = decodeURIComponent(url);

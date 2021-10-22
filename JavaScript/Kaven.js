@@ -4,9 +4,9 @@
  * @website:     http://blog.kaven.xyz
  * @file:        [Kaven-Common] /JavaScript/Kaven.js
  * @create:      2021-10-11 11:20:31.863
- * @modify:      2021-10-22 17:37:31.470
+ * @modify:      2021-10-22 17:46:25.433
  * @version:     
- * @times:       26
+ * @times:       27
  * @lines:       137
  * @copyright:   Copyright © 2021 Kaven. All Rights Reserved.
  * @description: [description]
@@ -68,7 +68,7 @@ function main() {
 
     window.open = function (url, name, features, replace) {
 
-        if (url.startsWith(prefix)) {
+        if (url.startsWith(prefix) || url.startsWith(prefix.replace("/?", "?"))) {
             url = url.substr(prefix.length);
         }
 

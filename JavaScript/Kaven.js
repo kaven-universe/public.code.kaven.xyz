@@ -4,10 +4,10 @@
  * @website:     http://blog.kaven.xyz
  * @file:        [Kaven-Common] /JavaScript/Kaven.js
  * @create:      2021-10-11 11:20:31.863
- * @modify:      2021-10-22 16:57:41.015
+ * @modify:      2021-10-22 17:01:12.924
  * @version:     
- * @times:       23
- * @lines:       125
+ * @times:       24
+ * @lines:       130
  * @copyright:   Copyright © 2021 Kaven. All Rights Reserved.
  * @description: [description]
  * @license:     [license]
@@ -36,6 +36,10 @@ function checkHostName(h) {
     return false;
 }
 
+function click(selector) {
+    document.querySelector(selector)?.click();
+}
+
 function main() {
     const isZhihu = checkHostName("zhihu.com");
     const isCSDN = checkHostName("csdn.net");
@@ -46,7 +50,8 @@ function main() {
         prefix = "https://link.zhihu.com/?target=";
 
         // hide login
-        document.querySelector("body > div:nth-child(14) > div > div > div > div.Modal.Modal--default.signFlowModal > button").click();
+        click("body > div:nth-child(14) > div > div > div > div.Modal.Modal--default.signFlowModal > button");
+        click("body > div:nth-child(15) > div > div > div > div.Modal.Modal--default.signFlowModal > button")
     } else if (isCSDN) {
         prefix = "https://link.csdn.net/?target=";
     } else {

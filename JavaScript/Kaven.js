@@ -4,10 +4,10 @@
  * @website:     http://blog.kaven.xyz
  * @file:        [Kaven-Common] /JavaScript/Kaven.js
  * @create:      2021-10-11 11:20:31.863
- * @modify:      2021-10-22 23:47:45.386
+ * @modify:      2021-10-22 23:53:56.479
  * @version:     
- * @times:       33
- * @lines:       166
+ * @times:       34
+ * @lines:       170
  * @copyright:   Copyright © 2021 Kaven. All Rights Reserved.
  * @description: [description]
  * @license:     [license]
@@ -113,6 +113,10 @@ function main() {
      */
     const checkLink = (target) => {
 
+        if (!target) {
+            return false;
+        }
+        
         if (DEV()) {
             console.log("check: ", target);
         }

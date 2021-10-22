@@ -4,10 +4,10 @@
  * @website:     http://blog.kaven.xyz
  * @file:        [Kaven-Common] /JavaScript/Kaven.js
  * @create:      2021-10-11 11:20:31.863
- * @modify:      2021-10-22 17:01:12.924
+ * @modify:      2021-10-22 17:04:24.483
  * @version:     
- * @times:       24
- * @lines:       130
+ * @times:       25
+ * @lines:       133
  * @copyright:   Copyright © 2021 Kaven. All Rights Reserved.
  * @description: [description]
  * @license:     [license]
@@ -54,6 +54,9 @@ function main() {
         click("body > div:nth-child(15) > div > div > div > div.Modal.Modal--default.signFlowModal > button")
     } else if (isCSDN) {
         prefix = "https://link.csdn.net/?target=";
+
+        // hide top bar
+        click("#csdn-toolbar > div.toolbar-advert > span");
     } else {
         return;
     }

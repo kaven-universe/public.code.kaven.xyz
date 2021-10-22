@@ -4,10 +4,10 @@
  * @website:     http://blog.kaven.xyz
  * @file:        [Kaven-Common] /JavaScript/Kaven.js
  * @create:      2021-10-11 11:20:31.863
- * @modify:      2021-10-22 18:19:25.624
+ * @modify:      2021-10-22 23:47:45.386
  * @version:     
- * @times:       32
- * @lines:       163
+ * @times:       33
+ * @lines:       166
  * @copyright:   Copyright © 2021 Kaven. All Rights Reserved.
  * @description: [description]
  * @license:     [license]
@@ -77,7 +77,7 @@ function main() {
         // hide top bar
         click("#csdn-toolbar > div.toolbar-advert > span");
 
-        click("#csdn-redpack > em")
+        click("#csdn-redpack > em");
         click("#csdn-redpack > div > em");
     } else if (isJianshu) {
         prefixSet.add("https://link.jianshu.com/?t=");
@@ -90,7 +90,7 @@ function main() {
     // document.body.appendChild(iframe);
     // const windowOpen = iframe.contentWindow.open;
 
-    window.open = function (url, name, features, replace) {
+    window.open = function(url, name, features, replace) {
 
         for (const prefix of prefixSet) {
             if (url.startsWith(prefix)) {
@@ -105,7 +105,7 @@ function main() {
         }
 
         return windowOpen(url, name, features, replace);
-    }
+    };
 
     /**
      * 
@@ -129,9 +129,9 @@ function main() {
         }
 
         return false;
-    }
+    };
 
-    document.addEventListener("click", function (e) {
+    document.addEventListener("click", function(e) {
         if (DEV()) {
             console.log(e);
         }
@@ -153,10 +153,14 @@ function main() {
     });
 }
 
-const i = setInterval(() => {
-    if (document.readyState === "complete") {
-        clearInterval(i);
+if (document.readyState === "complete") {
+    main();
+} else {
+    const i = setInterval(() => {
+        if (document.readyState === "complete") {
+            clearInterval(i);
 
-        main();
-    }
-}, 200);
+            main();
+        }
+    }, 100);
+}

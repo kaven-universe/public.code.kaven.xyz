@@ -2,12 +2,12 @@
  * @author:      Kaven
  * @email:       kaven@wuwenkai.com
  * @website:     http://blog.kaven.xyz
- * @file:        [Kaven-Common] /JavaScript/zhihu.js
+ * @file:        [Kaven-Common] /JavaScript/Kaven.js
  * @create:      2021-10-11 11:20:31.863
- * @modify:      2021-10-11 16:16:13.854
+ * @modify:      2021-10-22 16:57:41.015
  * @version:     
- * @times:       22
- * @lines:       96
+ * @times:       23
+ * @lines:       125
  * @copyright:   Copyright © 2021 Kaven. All Rights Reserved.
  * @description: [description]
  * @license:     [license]
@@ -17,14 +17,43 @@ function DEV() {
     return "K_DEV" in window && window["K_DEV"] === true;
 }
 
-function main() {
+/**
+ * 
+ * @param { String } h 
+ * @returns 
+ */
+function checkHostName(h) {
+    const hostname = window.location.hostname.toLowerCase();
 
-    // hide login
-    document.querySelector("body > div:nth-child(14) > div > div > div > div.Modal.Modal--default.signFlowModal > button").click();
+    if (hostname === h) {
+        return true;
+    }
+
+    if (hostname.endsWith(`.${h}`)) {
+        return true;
+    }
+
+    return false;
+}
+
+function main() {
+    const isZhihu = checkHostName("zhihu.com");
+    const isCSDN = checkHostName("csdn.net");
+
+    let prefix = "";
+
+    if (isZhihu) {
+        prefix = "https://link.zhihu.com/?target=";
+
+        // hide login
+        document.querySelector("body > div:nth-child(14) > div > div > div > div.Modal.Modal--default.signFlowModal > button").click();
+    } else if (isCSDN) {
+        prefix = "https://link.csdn.net/?target=";
+    } else {
+        return;
+    }
 
     const windowOpen = window.open;
-    const prefix = "https://link.zhihu.com/?target=";
-
     window.open = function (url, name, features, replace) {
 
         if (url.startsWith(prefix)) {

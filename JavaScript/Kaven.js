@@ -4,10 +4,10 @@
  * @website:     http://blog.kaven.xyz
  * @file:        [Kaven-Common] /JavaScript/Kaven.js
  * @create:      2021-10-11 11:20:31.863
- * @modify:      2021-10-22 23:58:58.129
+ * @modify:      2021-10-23 00:05:57.526
  * @version:     
- * @times:       35
- * @lines:       170
+ * @times:       36
+ * @lines:       171
  * @copyright:   Copyright © 2021 Kaven. All Rights Reserved.
  * @description: [description]
  * @license:     [license]
@@ -81,6 +81,7 @@ function main() {
         click("#csdn-redpack > div > em");
     } else if (isJianshu) {
         prefixSet.add("https://link.jianshu.com/?t=");
+        prefixSet.add("https://links.jianshu.com/go?to=");
     } else {
         return;
     }

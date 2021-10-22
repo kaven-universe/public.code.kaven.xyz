@@ -4,9 +4,9 @@
  * @website:     http://blog.kaven.xyz
  * @file:        [Kaven-Common] /JavaScript/Kaven.js
  * @create:      2021-10-11 11:20:31.863
- * @modify:      2021-10-22 17:57:03.612
+ * @modify:      2021-10-22 17:59:12.285
  * @version:     
- * @times:       28
+ * @times:       29
  * @lines:       144
  * @copyright:   Copyright © 2021 Kaven. All Rights Reserved.
  * @description: [description]
@@ -66,10 +66,10 @@ function main() {
         return;
     }
 
-    // const windowOpen = window.open;
-    const iframe = document.createElement("iframe");
-    document.body.appendChild(iframe);
-    const windowOpen = iframe.contentWindow.open;
+    const windowOpen = window.open;
+    // const iframe = document.createElement("iframe");
+    // document.body.appendChild(iframe);
+    // const windowOpen = iframe.contentWindow.open;
 
     window.open = function (url, name, features, replace) {
 
@@ -104,7 +104,7 @@ function main() {
             const href = target.href;
 
             if (href) {
-                window.open(href, "_blank").focus();
+                window.open(href, "_blank")?.focus();
                 return true;
             }
         }

@@ -4,9 +4,9 @@
  * @website:     http://blog.kaven.xyz
  * @file:        [Kaven-Common] /JavaScript/Kaven.js
  * @create:      2021-10-11 11:20:31.863
- * @modify:      2021-10-23 00:05:57.526
+ * @modify:      2021-10-23 00:12:22.244
  * @version:     
- * @times:       36
+ * @times:       37
  * @lines:       171
  * @copyright:   Copyright © 2021 Kaven. All Rights Reserved.
  * @description: [description]
@@ -167,5 +167,5 @@ if (document.readyState === "complete") {
 
             main();
         }
-    }, 100);
+    }, 850);
 }

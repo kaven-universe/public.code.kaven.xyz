@@ -4,10 +4,10 @@
  * @website:     http://blog.kaven.xyz
  * @file:        [Kaven-Common] /JavaScript/Kaven.js
  * @create:      2021-10-11 11:20:31.863
- * @modify:      2021-10-22 17:59:12.285
+ * @modify:      2021-10-22 18:01:13.804
  * @version:     
- * @times:       29
- * @lines:       144
+ * @times:       30
+ * @lines:       147
  * @copyright:   Copyright © 2021 Kaven. All Rights Reserved.
  * @description: [description]
  * @license:     [license]
@@ -62,6 +62,9 @@ function main() {
 
         // hide top bar
         click("#csdn-toolbar > div.toolbar-advert > span");
+
+        click("#csdn-redpack > em")
+        click("#csdn-redpack > div > em");
     } else {
         return;
     }

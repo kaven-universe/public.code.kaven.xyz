@@ -13,9 +13,45 @@
  * @license:     [license]
  ********************************************************************/
 
-function DEV() {
-    return "K_DEV" in window && window["K_DEV"] === true;
+const K_DEV = "K_DEV";
+
+function setCookie(name, value, days) {
+    var expires = "";
+    if (days) {
+        var date = new Date();
+        date.setTime(date.getTime() + (days * 24 * 60 * 60 * 1000));
+        expires = "; expires=" + date.toUTCString();
+    }
+    document.cookie = name + "=" + (value || "") + expires + "; path=/";
 }
+
+function getCookie(name) {
+    var nameEQ = name + "=";
+    var ca = document.cookie.split(';');
+    for (var i = 0; i < ca.length; i++) {
+        var c = ca[i];
+        while (c.charAt(0) == ' ') c = c.substring(1, c.length);
+        if (c.indexOf(nameEQ) == 0) return c.substring(nameEQ.length, c.length);
+    }
+    return null;
+}
+
+function eraseCookie(name) {
+    document.cookie = name + '=; Path=/; Expires=Thu, 01 Jan 1970 00:00:01 GMT;';
+}
+
+function DEV(enable) {
+    if (enable === undefined) {
+        return getCookie(K_DEV) === "true";
+    }
+
+    if (enable) {
+        setCookie(K_DEV, "true", 1);
+    } else {
+        eraseCookie(K_DEV);
+    }
+}
+
 
 /**
  * 
@@ -91,7 +127,7 @@ function main() {
     // document.body.appendChild(iframe);
     // const windowOpen = iframe.contentWindow.open;
 
-    window.open = function(url, name, features, replace) {
+    window.open = function (url, name, features, replace) {
 
         for (const prefix of prefixSet) {
             if (url.startsWith(prefix)) {
@@ -117,7 +153,7 @@ function main() {
         if (!target) {
             return false;
         }
-        
+
         if (DEV()) {
             console.log("check: ", target);
         }
@@ -136,7 +172,7 @@ function main() {
         return false;
     };
 
-    document.addEventListener("click", function(e) {
+    document.addEventListener("click", function (e) {
         if (DEV()) {
             console.log(e);
         }

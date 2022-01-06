@@ -4,9 +4,9 @@
  * @website:     http://blog.kaven.xyz
  * @file:        [Kaven-Common] /JavaScript/TFS.js
  * @create:      2021-06-10 10:39:48.020
- * @modify:      2022-01-06 16:43:02.693
+ * @modify:      2022-01-06 17:01:46.347
  * @version:     
- * @times:       24
+ * @times:       25
  * @lines:       122
  * @copyright:   Copyright © 2021-2022 Kaven. All Rights Reserved.
  * @description: [description]
@@ -76,7 +76,7 @@ async function GenerateDailyWorkReport(onlyWorkItems) {
             let set = workItemChangesets.get(item);
             if (!set) {
                 set = new Set();
-                workItemChangesets.set(item);
+                workItemChangesets.set(item, set);
             }
 
             set.add(changeset);

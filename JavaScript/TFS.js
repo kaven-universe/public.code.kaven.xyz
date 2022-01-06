@@ -4,9 +4,9 @@
  * @website:     http://blog.kaven.xyz
  * @file:        [Kaven-Common] /JavaScript/TFS.js
  * @create:      2021-06-10 10:39:48.020
- * @modify:      2022-01-06 17:07:06.997
+ * @modify:      2022-01-06 17:08:22.551
  * @version:     
- * @times:       26
+ * @times:       27
  * @lines:       130
  * @copyright:   Copyright © 2021-2022 Kaven. All Rights Reserved.
  * @description: [description]
@@ -96,7 +96,7 @@ async function GenerateDailyWorkReport(onlyWorkItems) {
     const lines = [];
     for (const [key, value] of workItemChangesets) {
         const workItem = key;
-        lines.add(`${workItem.workItemType} ${workItem.id}: ${workItem.title}`);
+        lines.push(`${workItem.workItemType} ${workItem.id}: ${workItem.title}`);
 
         if (!onlyWorkItems) {
             continue;
@@ -106,18 +106,18 @@ async function GenerateDailyWorkReport(onlyWorkItems) {
             for (const changeset of value) {
                 const comment = await GetChangesetComment(changeset);
                 if (comment) {
-                    lines.add(comment);
+                    lines.push(comment);
                 }
             }
 
-            lines.add("\n");
+            lines.push("\n");
         }
     }
 
-    lines.add("\n");
-    lines.add(`变更集：${changesets.join(", ")}`);
+    lines.push("\n");
+    lines.push(`变更集：${changesets.join(", ")}`);
 
-    return Array.from(lines).join("\n");
+    return lines.join("\n");
 }
 
 function CopyDailyWorkReport(onlyWorkItems) {

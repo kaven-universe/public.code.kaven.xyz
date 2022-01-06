@@ -4,9 +4,9 @@
  * @website:     http://blog.kaven.xyz
  * @file:        [Kaven-Common] /JavaScript/TFS.js
  * @create:      2021-06-10 10:39:48.020
- * @modify:      2022-01-06 16:27:53.191
+ * @modify:      2022-01-06 16:29:26.018
  * @version:     
- * @times:       22
+ * @times:       23
  * @lines:       122
  * @copyright:   Copyright © 2021-2022 Kaven. All Rights Reserved.
  * @description: [description]
@@ -17,7 +17,7 @@ function GetChangesets() {
     return $(".group-results:first").find(".change-info").map(function () { return $(this).attr("title").split(" ")[0]; }).get();
 }
 
-function GetWorkItems(changeset) {
+async function GetWorkItems(changeset) {
     // Retrieves the work items associated with a particular changeset.
     // https://docs.microsoft.com/en-us/rest/api/azure/devops/tfvc/changesets/get%20changeset%20work%20items?view=azure-devops-rest-6.0
     const url = new URL(location.href.replace("/_versionControl/", "/_apis/tfvc/"));

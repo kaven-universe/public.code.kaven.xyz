@@ -4,9 +4,9 @@
  * @website:     http://blog.kaven.xyz
  * @file:        [Kaven-Common] /JavaScript/TFS.js
  * @create:      2021-06-10 10:39:48.020
- * @modify:      2022-01-06 17:09:15.607
+ * @modify:      2022-01-06 17:19:03.750
  * @version:     
- * @times:       28
+ * @times:       29
  * @lines:       130
  * @copyright:   Copyright © 2021-2022 Kaven. All Rights Reserved.
  * @description: [description]
@@ -102,7 +102,7 @@ async function GenerateDailyWorkReport(onlyWorkItems) {
             continue;
         }
 
-        if (value.length > 1) {
+        if (value.size > 1) {
             for (const changeset of value) {
                 const comment = await GetChangesetComment(changeset);
                 if (comment) {

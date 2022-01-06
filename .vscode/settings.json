@@ -25,6 +25,7 @@
         "nlst",
         "pagelist",
         "playurl",
+        "pnpm",
         "progressbar",
         "rarfile",
         "redpack",
@@ -34,5 +35,8 @@
         "unrar",
         "wenkai",
         "zhihu"
-    ]
+    ],
+    "files.exclude": {
+        "**/node_modules": true
+    }
 }

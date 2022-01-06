@@ -4,9 +4,9 @@
  * @website:     http://blog.kaven.xyz
  * @file:        [Kaven-Common] /JavaScript/TFS.js
  * @create:      2021-06-10 10:39:48.020
- * @modify:      2022-01-06 16:29:26.018
+ * @modify:      2022-01-06 16:43:02.693
  * @version:     
- * @times:       23
+ * @times:       24
  * @lines:       122
  * @copyright:   Copyright © 2021-2022 Kaven. All Rights Reserved.
  * @description: [description]
@@ -14,7 +14,7 @@
  ********************************************************************/
 
 function GetChangesets() {
-    return $(".group-results:first").find(".change-info").map(function () { return $(this).attr("title").split(" ")[0]; }).get();
+    return $(".group-results:first").find(".change-info").map(function() { return $(this).attr("title").split(" ")[0]; }).get();
 }
 
 async function GetWorkItems(changeset) {
@@ -34,7 +34,7 @@ async function GetWorkItems(changeset) {
     return [];
 }
 
-function GetChangeset(changeset) {
+async function GetChangeset(changeset) {
     // Retrieves the work items associated with a particular changeset.
     // https://docs.microsoft.com/en-us/rest/api/azure/devops/tfvc/changesets/get%20changeset%20work%20items?view=azure-devops-rest-6.0
     const url = new URL(location.href.replace("/_versionControl/", "/_apis/tfvc/"));
@@ -51,7 +51,7 @@ function GetChangeset(changeset) {
     return undefined;
 }
 
-function GetChangesetComment(changeset) {
+async function GetChangesetComment(changeset) {
     return GetChangeset(changeset)?.comment;
 }
 
@@ -73,7 +73,7 @@ async function GenerateDailyWorkReport(onlyWorkItems) {
     for (const changeset of changesets) {
         const items = await GetWorkItems(changeset);
         for (const item of items) {
-            const set = workItemChangesets.get(item);
+            let set = workItemChangesets.get(item);
             if (!set) {
                 set = new Set();
                 workItemChangesets.set(item);
@@ -86,11 +86,11 @@ async function GenerateDailyWorkReport(onlyWorkItems) {
     console.log(workItemChangesets);
 
     const lines = [];
-    workItemChangesets.forEach((value, key) => {
+    for (const [key, value] of workItemChangesets) {
         const workItem = key;
         lines.add(`${workItem.workItemType} ${workItem.id}: ${workItem.title}`);
 
-        if (onlyWorkItems) {
+        if (!onlyWorkItems) {
             continue;
         }
         
@@ -104,7 +104,7 @@ async function GenerateDailyWorkReport(onlyWorkItems) {
 
             lines.add("\n");
         }
-    });
+    }
 
     lines.add("\n");
     lines.add(`变更集：${changesets.join(", ")}`);
@@ -118,5 +118,5 @@ function CopyDailyWorkReport(onlyWorkItems) {
         const report = await GenerateDailyWorkReport(onlyWorkItems);
         console.log(report);
         _copy(report);
-    })()
+    })();
 }

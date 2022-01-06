@@ -4,10 +4,10 @@
  * @website:     http://blog.kaven.xyz
  * @file:        [Kaven-Common] /JavaScript/TFS.js
  * @create:      2021-06-10 10:39:48.020
- * @modify:      2022-01-06 17:20:47.493
+ * @modify:      2022-01-06 17:22:26.948
  * @version:     
- * @times:       30
- * @lines:       130
+ * @times:       31
+ * @lines:       128
  * @copyright:   Copyright © 2021-2022 Kaven. All Rights Reserved.
  * @description: [description]
  * @license:     [license]
@@ -43,9 +43,7 @@ async function GetChangeset(changeset) {
     const r2 = await fetch(url);
     if (r2.ok) {
         const j2 = await r2.json();
-        if (j2) {
-            return j2.comment;
-        }
+        return j2;
     }
 
     return undefined;

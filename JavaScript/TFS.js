@@ -4,10 +4,10 @@
  * @website:     http://blog.kaven.xyz
  * @file:        [Kaven-Common] /JavaScript/TFS.js
  * @create:      2021-06-10 10:39:48.020
- * @modify:      2022-01-06 17:01:46.347
+ * @modify:      2022-01-06 17:07:06.997
  * @version:     
- * @times:       25
- * @lines:       122
+ * @times:       26
+ * @lines:       130
  * @copyright:   Copyright © 2021-2022 Kaven. All Rights Reserved.
  * @description: [description]
  * @license:     [license]
@@ -73,7 +73,15 @@ async function GenerateDailyWorkReport(onlyWorkItems) {
     for (const changeset of changesets) {
         const items = await GetWorkItems(changeset);
         for (const item of items) {
-            let set = workItemChangesets.get(item);
+            let key = item;
+            for (const workItem of workItemChangesets.keys()) {
+                if (workItem.id === item.id) {
+                    key = workItem;
+                    break;
+                }
+            }
+
+            let set = workItemChangesets.get(key);
             if (!set) {
                 set = new Set();
                 workItemChangesets.set(item, set);
@@ -93,7 +101,7 @@ async function GenerateDailyWorkReport(onlyWorkItems) {
         if (!onlyWorkItems) {
             continue;
         }
-        
+
         if (value.length > 1) {
             for (const changeset of value) {
                 const comment = await GetChangesetComment(changeset);

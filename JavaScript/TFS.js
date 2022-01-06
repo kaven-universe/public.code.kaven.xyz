@@ -4,9 +4,9 @@
  * @website:     http://blog.kaven.xyz
  * @file:        [Kaven-Common] /JavaScript/TFS.js
  * @create:      2021-06-10 10:39:48.020
- * @modify:      2022-01-06 17:08:22.551
+ * @modify:      2022-01-06 17:09:15.607
  * @version:     
- * @times:       27
+ * @times:       28
  * @lines:       130
  * @copyright:   Copyright © 2021-2022 Kaven. All Rights Reserved.
  * @description: [description]
@@ -98,7 +98,7 @@ async function GenerateDailyWorkReport(onlyWorkItems) {
         const workItem = key;
         lines.push(`${workItem.workItemType} ${workItem.id}: ${workItem.title}`);
 
-        if (!onlyWorkItems) {
+        if (onlyWorkItems) {
             continue;
         }
 

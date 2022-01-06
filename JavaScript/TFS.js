@@ -4,17 +4,55 @@
  * @website:     http://blog.kaven.xyz
  * @file:        [Kaven-Common] /JavaScript/TFS.js
  * @create:      2021-06-10 10:39:48.020
- * @modify:      2021-06-16 19:51:31.728
+ * @modify:      2022-01-06 16:27:53.191
  * @version:     
- * @times:       20
- * @lines:       77
- * @copyright:   Copyright © 2021 Kaven. All Rights Reserved.
+ * @times:       22
+ * @lines:       122
+ * @copyright:   Copyright © 2021-2022 Kaven. All Rights Reserved.
  * @description: [description]
  * @license:     [license]
  ********************************************************************/
 
 function GetChangesets() {
     return $(".group-results:first").find(".change-info").map(function () { return $(this).attr("title").split(" ")[0]; }).get();
+}
+
+function GetWorkItems(changeset) {
+    // Retrieves the work items associated with a particular changeset.
+    // https://docs.microsoft.com/en-us/rest/api/azure/devops/tfvc/changesets/get%20changeset%20work%20items?view=azure-devops-rest-6.0
+    const url = new URL(location.href.replace("/_versionControl/", "/_apis/tfvc/"));
+    url.pathname += `/${changeset}/workItems`;
+
+    const r = await fetch(url);
+    if (r.ok) {
+        const j = await r.json();
+        if (j.count > 0) {
+            return j.value;
+        }
+    }
+
+    return [];
+}
+
+function GetChangeset(changeset) {
+    // Retrieves the work items associated with a particular changeset.
+    // https://docs.microsoft.com/en-us/rest/api/azure/devops/tfvc/changesets/get%20changeset%20work%20items?view=azure-devops-rest-6.0
+    const url = new URL(location.href.replace("/_versionControl/", "/_apis/tfvc/"));
+    url.pathname += `/${changeset}`;
+
+    const r2 = await fetch(url);
+    if (r2.ok) {
+        const j2 = await r2.json();
+        if (j2) {
+            return j2.comment;
+        }
+    }
+
+    return undefined;
+}
+
+function GetChangesetComment(changeset) {
+    return GetChangeset(changeset)?.comment;
 }
 
 function GetChangesetString() {
@@ -29,37 +67,44 @@ function CopyChangesetString() {
 
 async function GenerateDailyWorkReport(onlyWorkItems) {
     const changesets = GetChangesets();
-    console.log(changesets);
+    // console.log(changesets);
 
-    const lines = new Set();
+    const workItemChangesets = new Map();
     for (const changeset of changesets) {
-        // Retrieves the work items associated with a particular changeset.
-        // https://docs.microsoft.com/en-us/rest/api/azure/devops/tfvc/changesets/get%20changeset%20work%20items?view=azure-devops-rest-6.0
-        const url = new URL(location.href.replace("/_versionControl/", "/_apis/tfvc/"));
-        url.pathname += `/${changeset}/workItems`;
-
-        const r = await fetch(url);
-        if (r.ok) {
-            const j = await r.json();
-            if (j.count > 0) {
-                for (const item of j.value) {
-                    lines.add(`${item.workItemType} ${item.id}: ${item.title}`);
-                }
-            } else {
-
-                if (onlyWorkItems === true) {
-                    continue;
-                }
-
-                url.pathname = url.pathname.substring(0, url.pathname.lastIndexOf("/workItems"));
-                const r2 = await fetch(url);
-                if (r2.ok) {
-                    const j2 = await r2.json();
-                    lines.add(j2.comment);
-                }
+        const items = await GetWorkItems(changeset);
+        for (const item of items) {
+            const set = workItemChangesets.get(item);
+            if (!set) {
+                set = new Set();
+                workItemChangesets.set(item);
             }
+
+            set.add(changeset);
         }
     }
+
+    console.log(workItemChangesets);
+
+    const lines = [];
+    workItemChangesets.forEach((value, key) => {
+        const workItem = key;
+        lines.add(`${workItem.workItemType} ${workItem.id}: ${workItem.title}`);
+
+        if (onlyWorkItems) {
+            continue;
+        }
+        
+        if (value.length > 1) {
+            for (const changeset of value) {
+                const comment = await GetChangesetComment(changeset);
+                if (comment) {
+                    lines.add(comment);
+                }
+            }
+
+            lines.add("\n");
+        }
+    });
 
     lines.add("\n");
     lines.add(`变更集：${changesets.join(", ")}`);

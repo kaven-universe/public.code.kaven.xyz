@@ -4,9 +4,9 @@
  * @website:     http://blog.kaven.xyz
  * @file:        [Kaven-Common] /JavaScript/TFS.js
  * @create:      2021-06-10 10:39:48.020
- * @modify:      2022-01-06 17:19:03.750
+ * @modify:      2022-01-06 17:20:47.493
  * @version:     
- * @times:       29
+ * @times:       30
  * @lines:       130
  * @copyright:   Copyright © 2021-2022 Kaven. All Rights Reserved.
  * @description: [description]
@@ -52,7 +52,7 @@ async function GetChangeset(changeset) {
 }
 
 async function GetChangesetComment(changeset) {
-    return GetChangeset(changeset)?.comment;
+    return (await GetChangeset(changeset))?.comment;
 }
 
 function GetChangesetString() {

@@ -4,11 +4,11 @@
  * @website:     http://blog.kaven.xyz
  * @file:        [Kaven-Common] /JavaScript/Kaven.js
  * @create:      2021-10-11 11:20:31.863
- * @modify:      2021-10-23 00:12:22.244
+ * @modify:      2022-01-10 17:51:51.764
  * @version:     
- * @times:       37
- * @lines:       171
- * @copyright:   Copyright © 2021 Kaven. All Rights Reserved.
+ * @times:       38
+ * @lines:       207
+ * @copyright:   Copyright © 2021-2022 Kaven. All Rights Reserved.
  * @description: [description]
  * @license:     [license]
  ********************************************************************/
@@ -16,9 +16,9 @@
 const K_DEV = "K_DEV";
 
 function setCookie(name, value, days) {
-    var expires = "";
+    let expires = "";
     if (days) {
-        var date = new Date();
+        const date = new Date();
         date.setTime(date.getTime() + (days * 24 * 60 * 60 * 1000));
         expires = "; expires=" + date.toUTCString();
     }
@@ -26,18 +26,18 @@ function setCookie(name, value, days) {
 }
 
 function getCookie(name) {
-    var nameEQ = name + "=";
-    var ca = document.cookie.split(';');
-    for (var i = 0; i < ca.length; i++) {
-        var c = ca[i];
-        while (c.charAt(0) == ' ') c = c.substring(1, c.length);
+    const nameEQ = name + "=";
+    const ca = document.cookie.split(";");
+    for (let i = 0; i < ca.length; i++) {
+        let c = ca[i];
+        while (c.charAt(0) == " ") c = c.substring(1, c.length);
         if (c.indexOf(nameEQ) == 0) return c.substring(nameEQ.length, c.length);
     }
     return null;
 }
 
 function eraseCookie(name) {
-    document.cookie = name + '=; Path=/; Expires=Thu, 01 Jan 1970 00:00:01 GMT;';
+    document.cookie = name + "=; Path=/; Expires=Thu, 01 Jan 1970 00:00:01 GMT;";
 }
 
 function DEV(enable) {
@@ -127,7 +127,7 @@ function main() {
     // document.body.appendChild(iframe);
     // const windowOpen = iframe.contentWindow.open;
 
-    window.open = function (url, name, features, replace) {
+    window.open = function(url, name, features, replace) {
 
         for (const prefix of prefixSet) {
             if (url.startsWith(prefix)) {
@@ -172,7 +172,7 @@ function main() {
         return false;
     };
 
-    document.addEventListener("click", function (e) {
+    document.addEventListener("click", function(e) {
         if (DEV()) {
             console.log(e);
         }

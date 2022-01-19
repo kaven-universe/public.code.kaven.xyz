@@ -4,10 +4,10 @@
  * @website:     http://blog.kaven.xyz
  * @file:        [Kaven-Common] /JavaScript/TFS.js
  * @create:      2021-06-10 10:39:48.020
- * @modify:      2022-01-19 17:39:53.114
+ * @modify:      2022-01-19 17:43:37.748
  * @version:     
- * @times:       35
- * @lines:       147
+ * @times:       36
+ * @lines:       151
  * @copyright:   Copyright © 2021-2022 Kaven. All Rights Reserved.
  * @description: [description]
  * @license:     [license]
@@ -99,6 +99,15 @@ async function GenerateDailyWorkReport(ignoreChangesetComment) {
     console.log(workItemChangesets);
 
     const lines = [];
+
+    const addChangesetComment = async (changeset) => {
+        const comment = await GetChangesetComment(changeset);
+        if (comment) {
+            lines.push(comment);
+            lines.push("\n");
+        }
+    };
+
     for (const [key, value] of workItemChangesets) {
         const workItem = key;
 
@@ -115,20 +124,15 @@ async function GenerateDailyWorkReport(ignoreChangesetComment) {
 
         if (value.size > 1) {
             for (const changeset of value) {
-                const comment = await GetChangesetComment(changeset);
-                if (comment) {
-                    lines.push(comment);
-                    lines.push("\n");
-                }
+                await addChangesetComment(changeset);
             }
 
             lines.push("\n");
         }
     }
 
-    for (const item of independentChangesets) {
-        lines.push(item);
-        lines.push("\n");
+    for (const changeset of independentChangesets) {
+        await addChangesetComment(changeset);
     }
 
     lines.push("\n");

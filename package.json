@@ -3,8 +3,8 @@
 		"install": "pnpm i --shamefully-hoist"
 	},
 	"devDependencies": {
-		"@types/jquery": "^3.5.11",
-		"@wenkai.wu/eslint-config": "^1.0.5",
-		"eslint": "^7.30.0"
+		"@types/jquery": "^3.5.13",
+		"@wenkai.wu/eslint-config": "^1.0.6",
+		"eslint": "^8.7.0"
 	}
 }

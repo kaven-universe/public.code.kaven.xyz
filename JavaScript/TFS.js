@@ -4,10 +4,10 @@
  * @website:     http://blog.kaven.xyz
  * @file:        [Kaven-Common] /JavaScript/TFS.js
  * @create:      2021-06-10 10:39:48.020
- * @modify:      2022-01-06 17:34:09.862
+ * @modify:      2022-01-19 17:39:53.114
  * @version:     
- * @times:       34
- * @lines:       135
+ * @times:       35
+ * @lines:       147
  * @copyright:   Copyright © 2021-2022 Kaven. All Rights Reserved.
  * @description: [description]
  * @license:     [license]
@@ -63,13 +63,20 @@ function CopyChangesetString() {
     copy(str);
 }
 
-async function GenerateDailyWorkReport(onlyWorkItems) {
+async function GenerateDailyWorkReport(ignoreChangesetComment) {
     const changesets = GetChangesets();
     // console.log(changesets);
 
     const workItemChangesets = new Map();
+    const independentChangesets = [];
     for (const changeset of changesets) {
         const items = await GetWorkItems(changeset);
+        if (items.length === 0) {
+            // not linking any work items
+            independentChangesets.push(changeset);
+            continue;
+        }
+        
         for (const item of items) {
             let key = item;
             for (const workItem of workItemChangesets.keys()) {
@@ -102,7 +109,7 @@ async function GenerateDailyWorkReport(onlyWorkItems) {
         lines.push(`${workItem.workItemType} ${workItem.id}: ${workItem.title}`);
         lines.push("\n");
 
-        if (onlyWorkItems) {
+        if (ignoreChangesetComment) {
             continue;
         }
 
@@ -117,6 +124,11 @@ async function GenerateDailyWorkReport(onlyWorkItems) {
 
             lines.push("\n");
         }
+    }
+
+    for (const item of independentChangesets) {
+        lines.push(item);
+        lines.push("\n");
     }
 
     lines.push("\n");

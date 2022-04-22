@@ -4,9 +4,9 @@
  * @website:     http://blog.kaven.xyz
  * @file:        [Kaven-Common] /JavaScript/Kaven.js
  * @create:      2021-10-11 11:20:31.863
- * @modify:      2022-04-22 14:49:31.348
+ * @modify:      2022-04-22 14:51:37.906
  * @version:     
- * @times:       41
+ * @times:       42
  * @lines:       242
  * @copyright:   Copyright © 2021-2022 Kaven. All Rights Reserved.
  * @description: [description]
@@ -84,7 +84,7 @@ class Kaven {
         return false;
     }
 
-    static getTableColumnCells(selector, col) {
+    static getTableColumnCells(selector, col = 0) {
         const tab = document.querySelector(selector);
         const n = tab.rows.length;
 
@@ -106,8 +106,8 @@ class Kaven {
         return cells;
     }
 
-    static getTableColumnText(selector, sep = "\r\n") {
-        const list = Kaven.getTableColumnCells(selector).map(p => p.innerText);
+    static getTableColumnText(selector, col = 0, sep = "\r\n") {
+        const list = Kaven.getTableColumnCells(selector, col).map(p => p.innerText);
 
         if (sep !== undefined) {
             return list.join(sep);

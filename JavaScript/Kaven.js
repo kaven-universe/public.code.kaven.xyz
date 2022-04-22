@@ -4,10 +4,10 @@
  * @website:     http://blog.kaven.xyz
  * @file:        [Kaven-Common] /JavaScript/Kaven.js
  * @create:      2021-10-11 11:20:31.863
- * @modify:      2022-04-22 14:43:40.964
+ * @modify:      2022-04-22 14:49:31.348
  * @version:     
- * @times:       40
- * @lines:       232
+ * @times:       41
+ * @lines:       242
  * @copyright:   Copyright © 2021-2022 Kaven. All Rights Reserved.
  * @description: [description]
  * @license:     [license]
@@ -84,26 +84,36 @@ class Kaven {
         return false;
     }
 
-    static getColumnText(tableSelector, col) {
-        const tab = document.querySelector(tableSelector);
+    static getTableColumnCells(selector, col) {
+        const tab = document.querySelector(selector);
         const n = tab.rows.length;
 
-        const textList = [];
+        const cells = [];
 
         // First check that col is not less then 0
         if (col < 0) {
-            return textList;
+            return cells;
         }
 
         for (let i = 0; i < n; i++) {
             const tr = tab.rows[i];
             if (tr.cells.length > col) {
                 const td = tr.cells[col];
-                textList.push(td.innerText);
+                cells.push(td);
             }
         }
 
-        return textList;
+        return cells;
+    }
+
+    static getTableColumnText(selector, sep = "\r\n") {
+        const list = Kaven.getTableColumnCells(selector).map(p => p.innerText);
+
+        if (sep !== undefined) {
+            return list.join(sep);
+        }
+
+        return list;
     }
 
     static main() {

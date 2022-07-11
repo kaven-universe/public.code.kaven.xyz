@@ -1,4 +1,6 @@
 {
+    "Kaven.generateFileHeader.projectName": "kaven-public",
+    "Kaven.generateFileHeader.versionEnable": false,
     "cSpell.words": [
         "CONTROLBAR",
         "CSDN",

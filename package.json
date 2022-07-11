@@ -1,4 +1,5 @@
 {
+	"name": "kaven-public",
 	"devDependencies": {
 		"@types/jquery": "^3.5.14",
 		"@wenkai.wu/eslint-config": "^1.0.6",

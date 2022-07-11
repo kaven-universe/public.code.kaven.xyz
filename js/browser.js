@@ -2,12 +2,11 @@
  * @author:      Kaven
  * @email:       kaven@wuwenkai.com
  * @website:     http://blog.kaven.xyz
- * @file:        [public] /js/browser.js
+ * @file:        [kaven-public] /js/browser.js
  * @create:      2021-10-11 11:20:31.863
- * @modify:      2022-07-11 18:24:40.083
- * @version:     
- * @times:       44
- * @lines:       246
+ * @modify:      2022-07-11 18:27:36.199
+ * @times:       47
+ * @lines:       245
  * @copyright:   Copyright © 2021-2022 Kaven. All Rights Reserved.
  * @description: [description]
  * @license:     [license]
@@ -53,7 +52,6 @@ class Kaven {
             Kaven.eraseCookie(K_DEV);
         }
     }
-
 
     /**
      * 

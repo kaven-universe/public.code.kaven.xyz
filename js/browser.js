@@ -4,9 +4,9 @@
  * @website:     http://blog.kaven.xyz
  * @file:        [public] /js/browser.js
  * @create:      2021-10-11 11:20:31.863
- * @modify:      2022-07-11 18:21:41.615
+ * @modify:      2022-07-11 18:24:40.083
  * @version:     
- * @times:       43
+ * @times:       44
  * @lines:       246
  * @copyright:   Copyright © 2021-2022 Kaven. All Rights Reserved.
  * @description: [description]
@@ -142,7 +142,7 @@ class Kaven {
                 }
 
                 i++;
-            } while (i < 30);
+            } while (i < 50);
 
         } else if (isCSDN) {
             prefixSet.add("https://link.csdn.net/?target=");

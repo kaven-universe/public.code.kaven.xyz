@@ -2,12 +2,12 @@
  * @author:      Kaven
  * @email:       kaven@wuwenkai.com
  * @website:     http://blog.kaven.xyz
- * @file:        [Kaven-Common] /JavaScript/Kaven.js
+ * @file:        [public] /js/browser.js
  * @create:      2021-10-11 11:20:31.863
- * @modify:      2022-04-22 14:51:37.906
+ * @modify:      2022-07-11 18:21:41.615
  * @version:     
- * @times:       42
- * @lines:       242
+ * @times:       43
+ * @lines:       246
  * @copyright:   Copyright © 2021-2022 Kaven. All Rights Reserved.
  * @description: [description]
  * @license:     [license]
@@ -120,6 +120,10 @@ class Kaven {
         const isZhihu = Kaven.checkHostName("zhihu.com");
         const isCSDN = Kaven.checkHostName("csdn.net");
         const isJianshu = Kaven.checkHostName("jianshu.com");
+
+        if (Kaven.DEV()) {
+            console.info(`isZhihu:${isZhihu}, isCSDN:${isCSDN}, isJianshu:${isJianshu}`);
+        }
 
         /**
          * @type { Set<string> }

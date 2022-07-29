@@ -4,9 +4,9 @@
  * @website:     http://blog.kaven.xyz
  * @file:        [kaven-public] /js/browser.js
  * @create:      2021-10-11 11:20:31.863
- * @modify:      2022-07-11 18:27:36.199
- * @times:       47
- * @lines:       245
+ * @modify:      2022-07-29 18:23:34.506
+ * @times:       48
+ * @lines:       247
  * @copyright:   Copyright © 2021-2022 Kaven. All Rights Reserved.
  * @description: [description]
  * @license:     [license]
@@ -151,6 +151,8 @@ class Kaven {
 
             Kaven.click("#csdn-redpack > em");
             Kaven.click("#csdn-redpack > div > em");
+
+            Kaven.click("#passportbox > span");
         } else if (isJianshu) {
             prefixSet.add("https://link.jianshu.com/?t=");
             prefixSet.add("https://links.jianshu.com/go?to=");

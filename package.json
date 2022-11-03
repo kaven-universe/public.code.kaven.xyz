@@ -2,7 +2,7 @@
 	"name": "kaven-public",
 	"devDependencies": {
 		"@types/jquery": "^3.5.14",
-		"@wenkai.wu/eslint-config": "^1.0.6",
-		"eslint": "^8.19.0"
+		"@wenkai.wu/eslint-config": "^1.0.7",
+		"eslint": "^8.26.0"
 	}
 }

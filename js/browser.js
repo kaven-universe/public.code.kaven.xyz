@@ -4,22 +4,15 @@
  * @website:     http://blog.kaven.xyz
  * @file:        [kaven-public] /js/browser.js
  * @create:      2021-10-11 11:20:31.863
- * @modify:      2022-11-21 15:44:50.591
- * @times:       50
- * @lines:       255
+ * @modify:      2022-11-21 15:59:41.449
+ * @times:       51
+ * @lines:       256
  * @copyright:   Copyright © 2021-2022 Kaven. All Rights Reserved.
  * @description: [description]
  * @license:     [license]
  ********************************************************************/
 
-if (K_DEV || Kaven) {
-    return;
-}
-
-const K_DEV = "K_DEV";
-
 class Kaven {
-
     static setCookie(name, value, days) {
         let expires = "";
         if (days) {
@@ -46,6 +39,8 @@ class Kaven {
     }
 
     static DEV(enable) {
+        const K_DEV = "K_DEV";
+
         if (enable === undefined) {
             return Kaven.getCookie(K_DEV) === "true";
         }
@@ -218,7 +213,10 @@ class Kaven {
             return false;
         };
 
-        document.addEventListener("click", function (e) {
+        /**
+         * @param {MouseEvent} e 
+         */
+        const click = (e) => {
             if (Kaven.DEV()) {
                 console.log(e);
             }
@@ -237,7 +235,10 @@ class Kaven {
                     } while (i++ < 5);
                 }
             }
-        });
+        };
+
+        document.removeEventListener("click", click);
+        document.addEventListener("click", click);
     }
 }
 

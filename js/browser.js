@@ -4,13 +4,17 @@
  * @website:     http://blog.kaven.xyz
  * @file:        [kaven-public] /js/browser.js
  * @create:      2021-10-11 11:20:31.863
- * @modify:      2022-11-07 17:43:22.665
- * @times:       49
- * @lines:       251
+ * @modify:      2022-11-21 15:44:50.591
+ * @times:       50
+ * @lines:       255
  * @copyright:   Copyright © 2021-2022 Kaven. All Rights Reserved.
  * @description: [description]
  * @license:     [license]
  ********************************************************************/
+
+if (K_DEV || Kaven) {
+    return;
+}
 
 const K_DEV = "K_DEV";
 
@@ -169,7 +173,7 @@ class Kaven {
         // document.body.appendChild(iframe);
         // const windowOpen = iframe.contentWindow.open;
 
-        window.open = function(url, name, features, replace) {
+        window.open = function (url, name, features, replace) {
 
             for (const prefix of prefixSet) {
                 if (url.startsWith(prefix)) {
@@ -214,7 +218,7 @@ class Kaven {
             return false;
         };
 
-        document.addEventListener("click", function(e) {
+        document.addEventListener("click", function (e) {
             if (Kaven.DEV()) {
                 console.log(e);
             }

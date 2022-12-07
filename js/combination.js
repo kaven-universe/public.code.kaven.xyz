@@ -4,9 +4,9 @@
  * @website:     http://blog.kaven.xyz
  * @file:        [kaven-public] /js/combination.js
  * @create:      2022-12-07 13:21:26.732
- * @modify:      2022-12-07 13:53:05.850
- * @times:       13
- * @lines:       100
+ * @modify:      2022-12-07 14:22:03.563
+ * @times:       21
+ * @lines:       156
  * @copyright:   Copyright © 2022 Kaven. All Rights Reserved.
  * @description: [description]
  * @license:     [license]
@@ -15,10 +15,10 @@
 // From: https://www.geeksforgeeks.org/print-all-possible-combinations-of-r-elements-in-a-given-array-of-size-n/
 
 /**
- * @param {number} n 
  * @param {number[]} values 
+ * @param {number} n 
  */
-function getCombination(n, values) {
+function getCombination(values, n) {
     /**
      * @type number[][]
      */
@@ -56,6 +56,53 @@ function getCombination(n, values) {
 }
 
 /**
+ * @param {number[]} values 
+ * @param {number} nMax 
+ * @param {number} nMin 
+ */
+function getCombinations(values, nMax, nMin) {
+    /**
+     * @type number[][]
+     */
+    const result = [];
+
+    if (!nMax) {
+        nMax = values.length;
+    }
+
+    if (!nMin) {
+        nMin = 1;
+    }
+
+    for (let i = nMin; i <= nMax; i++) {
+        const r = getCombination(values, i);
+        result.push(...r);
+    }
+
+    return result;
+}
+
+/**
+ * @param {number} target 
+ * @param {number[]} values 
+ * @param {number} nMax 
+ * @param {number} nMin 
+ */
+function getClosest(target, values, nMax, nMin) {
+    const r = getCombinations(values, nMax, nMin);
+    const list = r.map(data => {
+        return {
+            sum: data.reduce((p, c) => p + c),
+            data,
+        }
+    });
+
+    list.sort((x, y) => Math.abs(x.sum - target) - Math.abs(y.sum - target));
+
+    return list;
+}
+
+/**
  * @param {number[][]} result 
  */
 function print(result) {
@@ -64,36 +111,46 @@ function print(result) {
     }
 }
 
-const r = getCombination(3, [1, 2, 3, 4, 5]);
-print(r);
+// test1
+{
+    const r = getCombination([1, 2, 3, 4, 5], 3);
+    print(r);
+}
 
-const values = [
-    169,
-    43.74,
-    12.9,
-    19.7,
-    24.6,
-    43.51,
-    31.8,
-    25,
-    509,
-    579,
-    139,
-    6.9,
-    78.49,
-    26.9,
-    199,
-    9.9,
-    2499,
-    49.9,
-    23.5,
-    46.42,
-    19.9,
-    47.9,
-    34.8,
-    69,
-    128,
-    138,
-    107,
-    314,
-];
+// test2
+{
+    const values = [
+        169,
+        43.74,
+        12.9,
+        19.7,
+        24.6,
+        43.51,
+        31.8,
+        25,
+        509,
+        579,
+        139,
+        6.9,
+        78.49,
+        26.9,
+        199,
+        9.9,
+        2499,
+        49.9,
+        23.5,
+        46.42,
+        19.9,
+        47.9,
+        34.8,
+        69,
+        128,
+        138,
+        107,
+        314,
+    ];
+
+    const r1 = getClosest(200, values, 2);
+    const r2 = r1.filter(p => p.sum <= 200);
+    console.info(r2);
+}

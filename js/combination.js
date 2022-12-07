@@ -4,8 +4,8 @@
  * @website:     http://blog.kaven.xyz
  * @file:        [kaven-public] /js/combination.js
  * @create:      2022-12-07 13:21:26.732
- * @modify:      2022-12-07 14:22:03.563
- * @times:       21
+ * @modify:      2022-12-07 14:26:10.572
+ * @times:       24
  * @lines:       156
  * @copyright:   Copyright © 2022 Kaven. All Rights Reserved.
  * @description: [description]
@@ -83,13 +83,13 @@ function getCombinations(values, nMax, nMin) {
 }
 
 /**
- * @param {number} target 
  * @param {number[]} values 
  * @param {number} nMax 
  * @param {number} nMin 
  */
-function getClosest(target, values, nMax, nMin) {
+function getCombinationsWithSum(values, nMax, nMin) {
     const r = getCombinations(values, nMax, nMin);
+    
     const list = r.map(data => {
         return {
             sum: data.reduce((p, c) => p + c),
@@ -97,7 +97,7 @@ function getClosest(target, values, nMax, nMin) {
         }
     });
 
-    list.sort((x, y) => Math.abs(x.sum - target) - Math.abs(y.sum - target));
+    list.sort((x, y) => y.sum - x.sum);
 
     return list;
 }
@@ -150,7 +150,7 @@ function print(result) {
         314,
     ];
 
-    const r1 = getClosest(200, values, 2);
-    const r2 = r1.filter(p => p.sum <= 200);
+    const r1 = getCombinationsWithSum(values, 4);
+    const r2 = r1.filter(p => p.sum <= 200 && p.sum > 190);
     console.info(r2);
 }

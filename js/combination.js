@@ -4,9 +4,9 @@
  * @website:     http://blog.kaven.xyz
  * @file:        [kaven-public] /js/combination.js
  * @create:      2022-12-07 13:21:26.732
- * @modify:      2022-12-07 16:44:18.462
- * @times:       31
- * @lines:       195
+ * @modify:      2022-12-07 16:54:00.897
+ * @times:       32
+ * @lines:       198
  * @copyright:   Copyright © 2022 Kaven. All Rights Reserved.
  * @description: [description]
  * @license:     [license]
@@ -94,7 +94,7 @@ function getCombinations(values, nMax, nMin, recursion) {
     /**
      * @type number[][]
      */
-    const result = [];
+    let result = [];
 
     if (!nMax) {
         nMax = values.length;
@@ -106,7 +106,10 @@ function getCombinations(values, nMax, nMin, recursion) {
 
     for (let i = nMin; i <= nMax; i++) {
         const r = getCombination(values, i, recursion);
-        result.push(...r);
+        //result.push(...r); // Maximum call stack size exceeded
+        result = [...result, ...r];
+
+        console.info(`done: ${i}`);
     }
 
     return result;

@@ -13,6 +13,15 @@
             "env": {
                 "UNRAR_LIB_PATH": "${workspaceFolder}\\UnRAR64.dll"
             }
-        }
+        },
+        {
+            "name": "Launch Program",
+            "program": "${file}",
+            "request": "launch",
+            "skipFiles": [
+                "<node_internals>/**"
+            ],
+            "type": "node"
+        },
     ]
 }

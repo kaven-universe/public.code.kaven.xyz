@@ -4,9 +4,9 @@
  * @website:     http://blog.kaven.xyz
  * @file:        [kaven-public] /js/combination.js
  * @create:      2022-12-07 13:21:26.732
- * @modify:      2022-12-07 13:36:40.540
- * @times:       8
- * @lines:       54
+ * @modify:      2022-12-07 13:53:05.850
+ * @times:       13
+ * @lines:       100
  * @copyright:   Copyright © 2022 Kaven. All Rights Reserved.
  * @description: [description]
  * @license:     [license]
@@ -18,18 +18,21 @@
  * @param {number} n 
  * @param {number[]} values 
  */
-function printCombination(n, values) {
-    // A temporary array to store all combination one by one
-    let data = new Array(n);
+function getCombination(n, values) {
+    /**
+     * @type number[][]
+     */
+    const result = [];
 
     /**
+     * @param {number[]} data
      * @param {number} dataIndex 
      * @param {number} valueIndex 
      */
-    function getCombination(dataIndex, valueIndex) {
+    function nextCombination(data, dataIndex, valueIndex) {
         // Current combination is ready to be printed, print it
         if (dataIndex == n) {
-            console.info(data.join(", "));
+            result.push([...data]);
             return;
         }
 
@@ -40,14 +43,57 @@ function printCombination(n, values) {
 
         // current is included, put next at next location
         data[dataIndex] = values[valueIndex];
-        getCombination(dataIndex + 1, valueIndex + 1);
+        nextCombination(data, dataIndex + 1, valueIndex + 1);
 
         // current is excluded, replace it with next (Note that valueIndex+1 is passed, but dataIndex is not changed)
-        getCombination(dataIndex, valueIndex + 1);
+        nextCombination(data, dataIndex, valueIndex + 1);
     }
 
     // Print all combination using temporary array 'data[]'
-    getCombination(0, 0);
+    nextCombination(new Array(n), 0, 0);
+
+    return result;
 }
 
-printCombination(5, [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]);
+/**
+ * @param {number[][]} result 
+ */
+function print(result) {
+    for (const data of result) {
+        console.info(data.join(", "));
+    }
+}
+
+const r = getCombination(3, [1, 2, 3, 4, 5]);
+print(r);
+
+const values = [
+    169,
+    43.74,
+    12.9,
+    19.7,
+    24.6,
+    43.51,
+    31.8,
+    25,
+    509,
+    579,
+    139,
+    6.9,
+    78.49,
+    26.9,
+    199,
+    9.9,
+    2499,
+    49.9,
+    23.5,
+    46.42,
+    19.9,
+    47.9,
+    34.8,
+    69,
+    128,
+    138,
+    107,
+    314,
+];

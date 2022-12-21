@@ -4,8 +4,8 @@
  * @website:     http://blog.kaven.xyz
  * @file:        [kaven-public] /js/combination.js
  * @create:      2022-12-07 13:21:26.732
- * @modify:      2022-12-07 16:54:00.897
- * @times:       32
+ * @modify:      2022-12-07 18:04:38.597
+ * @times:       33
  * @lines:       198
  * @copyright:   Copyright © 2022 Kaven. All Rights Reserved.
  * @description: [description]
@@ -192,7 +192,7 @@ function print(result) {
         314,
     ];
 
-    const r1 = getCombinationsWithSum(values);
+    const r1 = getCombinationsWithSum(values, 3);
     const r2 = r1.filter(p => p.sum <= 200 && p.sum > 190);
     console.info(r2);
 }

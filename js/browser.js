@@ -4,10 +4,10 @@
  * @website:     http://blog.kaven.xyz
  * @file:        [kaven-public] /js/browser.js
  * @create:      2021-10-11 11:20:31.863
- * @modify:      2022-11-21 16:04:44.972
- * @times:       52
- * @lines:       257
- * @copyright:   Copyright © 2021-2022 Kaven. All Rights Reserved.
+ * @modify:      2023-01-22 16:32:31.028
+ * @times:       53
+ * @lines:       276
+ * @copyright:   Copyright © 2021-2023 Kaven. All Rights Reserved.
  * @description: [description]
  * @license:     [license]
  ********************************************************************/
@@ -240,6 +240,25 @@
 
             document.removeEventListener("click", click);
             document.addEventListener("click", click);
+        }
+    }
+
+    class QQSM {
+        static id;
+
+        static start(timeout = 1000) {
+            if (this.id) {
+                return;
+            }
+
+            this.isRunning = setInterval(() => {                
+                layer.closeAll();
+                Kaven.click("#hb > dl:nth-child(1) > dt");                
+            }, timeout);            
+        }
+
+        static stop() {
+            clearInterval(this.id);
         }
     }
 

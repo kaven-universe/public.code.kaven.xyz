@@ -4,15 +4,15 @@
  * @website:     http://blog.kaven.xyz
  * @file:        [kaven-public] /js/qqsm.js
  * @create:      2023-01-22 16:44:38.451
- * @modify:      2023-01-22 16:51:51.107
- * @times:       4
+ * @modify:      2023-01-22 18:37:01.078
+ * @times:       5
  * @lines:       45
  * @copyright:   Copyright © 2023 Kaven. All Rights Reserved.
  * @description: [description]
  * @license:     [license]
  ********************************************************************/
 
-class QQSM {
+let QQSM = class {
     static id;
 
     static click(selector) {

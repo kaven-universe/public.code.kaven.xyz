@@ -4,8 +4,8 @@
  * @website:     http://blog.kaven.xyz
  * @file:        [kaven-public] /js/browser.js
  * @create:      2021-10-11 11:20:31.863
- * @modify:      2023-09-02 17:24:16.553
- * @times:       55
+ * @modify:      2023-09-02 17:37:35.045
+ * @times:       56
  * @lines:       259
  * @copyright:   Copyright © 2021-2023 Kaven. All Rights Reserved.
  * @description: [description]
@@ -211,7 +211,7 @@
                     }
                 }
 
-                return false;
+                return checkLink(target.parentElement);
             };
 
             /**

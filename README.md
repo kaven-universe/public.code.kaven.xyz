@@ -1,5 +1,5 @@
-# Kaven-Public
+# [public.code.kaven.xyz](https://public.code.kaven.xyz/)
 
 ```sh
-https://kaven.xyz:3000/kaven/public/raw/branch/master/...
+https://public.code.kaven.xyz/...
 ```

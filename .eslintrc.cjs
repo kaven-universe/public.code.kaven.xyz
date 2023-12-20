@@ -16,6 +16,7 @@ module.exports = {
     env: {
         browser: true,
         es2021: true,
+        node: true,
         JQuery: true,
     },
     // "extends": "eslint:recommended",
@@ -27,5 +28,6 @@ module.exports = {
         ecmaVersion: 12,
     },
     rules: {
+        "no-console": "off",
     },
 };

@@ -114,10 +114,20 @@
             return list;
         }
 
+        /**
+         * @param { string } styles 
+         */
+        static addCss(styles) {
+            const styleSheet = document.createElement("style");
+            styleSheet.innerText = styles;
+            document.head.appendChild(styleSheet);
+        }
+
         static main() {
             const isZhihu = Kaven.checkHostName("zhihu.com");
             const isCSDN = Kaven.checkHostName("csdn.net");
             const isJianshu = Kaven.checkHostName("jianshu.com");
+            const isChatGpt = Kaven.checkHostName("chat.openai.com");
 
             if (Kaven.DEV()) {
                 console.info(`isZhihu:${isZhihu}, isCSDN:${isCSDN}, isJianshu:${isJianshu}`);
@@ -160,6 +170,10 @@
             } else if (isJianshu) {
                 prefixSet.add("https://link.jianshu.com/?t=");
                 prefixSet.add("https://links.jianshu.com/go?to=");
+            } else if (isChatGpt) {
+                Kaven.addCss(`.w-full.text-token-text-primary div div {
+                    max-width: max-content;
+                }`);
             } else {
                 return;
             }
@@ -169,7 +183,7 @@
             // document.body.appendChild(iframe);
             // const windowOpen = iframe.contentWindow.open;
 
-            window.open = function (url, name, features, replace) {
+            window.open = function(url, name, features, replace) {
 
                 for (const prefix of prefixSet) {
                     if (url.startsWith(prefix)) {

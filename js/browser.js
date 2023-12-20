@@ -172,7 +172,7 @@
                 prefixSet.add("https://links.jianshu.com/go?to=");
             } else if (isChatGpt) {
                 Kaven.addCss(`.w-full.text-token-text-primary div div {
-                    max-width: max-content;
+                    max-width: none;
                 }`);
             } else {
                 return;

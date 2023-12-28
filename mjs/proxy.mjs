@@ -4,15 +4,15 @@
  * @website:     http://blog.kaven.xyz
  * @file:        [kaven-public] /mjs/proxy.mjs
  * @create:      2023-12-28 15:37:23.256
- * @modify:      2023-12-28 17:32:21.177
- * @times:       8
- * @lines:       80
+ * @modify:      2023-12-28 18:02:07.072
+ * @times:       10
+ * @lines:       77
  * @copyright:   Copyright © 2023 Kaven. All Rights Reserved.
  * @description: [description]
  * @license:     [license]
  ********************************************************************/
 
-import { Sleep, SplitStringByNewline } from "kaven-basic";
+import { Distinct, Sleep, SplitStringByNewline } from "kaven-basic";
 import { HttpTryGetText, SaveJsonConfig } from "kaven-utils";
 import { createConnection } from "node:net";
 
@@ -36,7 +36,7 @@ async function add(host, port, type, tags) {
             "Type": type,
             "Host": host,
             "Port": Number(port),
-            "Tags": tags,
+            "Tags": Distinct(tags),
             "UserName": null,
             "Password": null,
             "IgnoreServerCertificateVerification": false
@@ -58,22 +58,19 @@ async function add(host, port, type, tags) {
     socket.setTimeout(1000);
 }
 
-async function addSocks5ProxyFromUrl(url, tags) {
+async function addSocks5ProxyFromUrl(url) {
     const data = await HttpTryGetText(url);
     const lines = SplitStringByNewline(data);
     if (lines && lines.length > 0) {
         for (const line of lines) {
-            const [host, port] = line.split(":");
+            const [hostPort, ...tags] = line.split("|")
+            const [host, port] = hostPort.split(":");
             add(host, port, "Socks5", tags);
         }
     }
 }
 
-// await addSocks5ProxyFromUrl("https://raw.githubusercontent.com/TheSpeedX/SOCKS-List/master/socks5.txt", ["free", "public"]);
-//await addSocks5ProxyFromUrl("https://gitee.com/mirrors_TheSpeedX/PROXY-List/raw/master/socks5.txt", ["free", "public"]);
-
-// await addSocks5ProxyFromUrl("https://github.com/monosans/proxy-list/blob/main/proxies_anonymous/socks5.txt", ["free", "public"]);
-await addSocks5ProxyFromUrl("https://gitee.com/git-sync/proxy-list/raw/main/proxies_anonymous/socks5.txt", ["free", "public"]);
+await addSocks5ProxyFromUrl("https://gitee.com/git-sync/proxy-list/raw/main/proxies_geolocation_anonymous/socks5.txt");
 
 await Sleep(2000);
 await SaveJsonConfig(proxies, "./generated/proxies.json");

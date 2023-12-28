@@ -4,5 +4,9 @@
 		"@types/jquery": "^3.5.29",
 		"@wenkai.wu/eslint-config": "^1.0.7",
 		"eslint": "^8.56.0"
+	},
+	"dependencies": {
+		"kaven-basic": "^4.3.4",
+		"kaven-utils": "^5.4.2"
 	}
 }

@@ -62,3 +62,4 @@ file-list.txt
 .vscode/.ropeproject/config.py
 .vscode/.ropeproject/objectdb
 node_modules/
+generated/

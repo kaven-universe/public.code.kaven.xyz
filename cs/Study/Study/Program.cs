@@ -4,7 +4,8 @@
     {
         private static void Main()
         {
-            Inheritance.Run();
+            //Inheritance.Run();
+            Enumeration.Run();
 
             Console.ReadLine();
         }

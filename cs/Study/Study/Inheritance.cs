@@ -2,12 +2,12 @@
 {
     public class Inheritance
     {
-        public class A
+        private class A
         {
             public virtual int Id { get; set; }
         }
 
-        public class B : A
+        private class B : A
         {
             public override int Id
             {

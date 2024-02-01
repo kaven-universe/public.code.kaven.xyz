@@ -5,7 +5,8 @@
         private static void Main()
         {
             //Inheritance.Run();
-            Enumeration.Run();
+            //Enumeration.Run();
+            FloatingPoint.Run();
 
             Console.ReadLine();
         }

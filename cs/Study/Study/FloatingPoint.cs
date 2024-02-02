@@ -72,6 +72,53 @@ namespace Study
             return row;
         }
 
+        private static string MoveDot(string binaryString, int offset)
+        {
+            // Find the position of the dot in the original binary string
+            var dotPosition = binaryString.IndexOf('.');
+
+            // If the dot is not present, assume it's at the end of the string
+            if (dotPosition == -1)
+            {
+                dotPosition = binaryString.Length;
+            }
+
+            // Calculate the new dot position after the offset
+            var newDotPosition = dotPosition + offset;
+
+            // Ensure the new dot position is within the bounds of the string
+            if (newDotPosition < 0)
+            {
+                return "0." + string.Join(string.Empty, Enumerable.Repeat("0", Math.Abs(newDotPosition))) + binaryString.Replace(".", string.Empty);
+            }
+            else if (newDotPosition >= binaryString.Length)
+            {
+                return binaryString.Replace(".", string.Empty) + string.Join(string.Empty, Enumerable.Repeat("0", newDotPosition - binaryString.Length));
+            }
+
+            // Insert the dot at the new position
+            var shiftedBinaryString = binaryString.Insert(newDotPosition, ".");
+
+            // Remove the dot from the old position
+            shiftedBinaryString = shiftedBinaryString.Remove(dotPosition + (newDotPosition > dotPosition ? 1 : 0), 1);
+
+            // If moving to the left and the new dot position is before the start, add leading zeros
+            if (newDotPosition < dotPosition)
+            {
+                var leadingZeros = dotPosition - newDotPosition;
+                shiftedBinaryString = shiftedBinaryString.Insert(0, new string('0', leadingZeros));
+            }
+
+            // If moving to the right and the new dot position is after the end, add trailing zeros
+            if (newDotPosition > dotPosition)
+            {
+                var trailingZeros = newDotPosition - dotPosition;
+                shiftedBinaryString = shiftedBinaryString.PadRight(shiftedBinaryString.Length + trailingZeros, '0');
+            }
+
+            return shiftedBinaryString;
+        }
+
         private static string GenerateTable(double[] values, string[]? descriptions = null, bool sem = true)
         {
             var columns = new List<string>();
@@ -179,7 +226,13 @@ namespace Study
                 else
                 {
                     cells.Add($"$(-1)^{s} * 1.{m}_{{(2)}} * 2^{{{Convert.ToUInt64(e, 2)} - 1023}}$");
-                    cells.Add($"${Math.Pow(-1, Convert.ToInt32(s, 2))} * {Convert.ToDouble("1." + m)} * 2^{{{Convert.ToUInt64(e, 2) - 1023}}}$");
+
+                    var offset = Convert.ToInt32(e, 2) - 1023;
+                    var binStr = MoveDot($"1.{m}", offset);
+                    //cells.Add($"${Math.Pow(-1, Convert.ToInt32(s, 2))} * {binStr}_{{(2)}}$");
+
+                    cells.Add($"${Math.Pow(-1, Convert.ToInt32(s, 2))} * {binStr}$");
+
                     cells.Add($"{value}");
                 }
 

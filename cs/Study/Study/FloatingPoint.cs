@@ -119,7 +119,14 @@ namespace Study
                 right = right.Insert(abs, ".");
             }
 
-            return left + right.Trim('.');
+            var result = left + right;
+
+            //if (result.Contains('.'))
+            //{
+            //    result = result.TrimEnd('0').TrimEnd('.');
+            //}
+
+            return result;
         }
 
         private static double BinaryToDouble(string value)
@@ -160,9 +167,10 @@ namespace Study
             }
             else
             {
-                columns.Add("Value");
                 columns.Add("$(-1)^s * 1.m_{(2)} * 2^{e-1023}$");
-                columns.Add(string.Empty);
+                //columns.Add(string.Empty);
+
+                columns.Add("Value");
             }
 
             var header = BuildRow([.. columns]);
@@ -251,11 +259,13 @@ namespace Study
                 {
                     cells.Add($"$(-1)^{s} * 1.{m}_{{(2)}} * 2^{{{Convert.ToUInt64(e, 2)} - 1023}}$");
 
+                    var sign = Math.Pow(-1, s == "0" ? 0 : 1);
+
                     var offset = Convert.ToInt32(e, 2) - 1023;
                     var binStr = MoveDot($"1.{m}", offset);
-                    cells.Add($"${Math.Pow(-1, s == "0" ? 0 : 1)} * {binStr}_{{(2)}}$");
+                    //cells.Add($"${sign} * {binStr}_{{(2)}}$");
 
-                    cells.Add($"{BinaryToDouble(binStr)}");
+                    cells.Add($"{sign * BinaryToDouble(binStr)}");
                 }
 
                 var row = "| " + string.Join(" | ", cells) + " |";

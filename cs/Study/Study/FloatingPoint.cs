@@ -148,26 +148,7 @@ namespace Study
             return result;
         }
 
-        private static double BinaryToDouble(string value)
-        {
-            var dotIndex = value.IndexOf('.');
-            var power = (dotIndex != -1 ? dotIndex : value.Length) - 1;
-
-            var result = 0d;
-            foreach (var item in value)
-            {
-                if (item == '.')
-                {
-                    Trace.Assert(power == -1);
-                    continue;
-                }
-
-                result += (item == '0' ? 0 : 1) * Math.Pow(2, power);
-                power--;
-            }
-
-            return result;
-        }
+        
 
         private static string GenerateTable(DoubleValue[] values, bool sem = true)
         {
@@ -200,7 +181,7 @@ namespace Study
 
             (string s, string e, string m) extract1(double value)
             {
-                var bin = Functions.ByteArrayToBinaryString(BitConverter.GetBytes(value).Reverse().ToArray());
+                var bin = Functions.BytesToBinaryString(BitConverter.GetBytes(value).Reverse().ToArray());
                 var s = bin[..1];
                 var e = bin.Substring(1, 11);
                 var m = bin[12..];
@@ -282,7 +263,7 @@ namespace Study
                     var binStr = MoveDot($"1.{m}", offset);
                     //cells.Add($"${sign} * {binStr}_{{(2)}}$");
 
-                    cells.Add($"{sign * BinaryToDouble(binStr)}");
+                    cells.Add($"{sign * Functions.BinaryStringToDouble(binStr)}");
                 }
 
                 var row = "| " + string.Join(" | ", cells) + " |";

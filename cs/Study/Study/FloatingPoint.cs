@@ -4,6 +4,25 @@ namespace Study
 {
     public class FloatingPoint
     {
+        public class DoubleValue
+        {
+            public double Value;
+            public string? Name;
+
+            public DoubleValue(double value, string? name = default)
+            {
+                Value = value;
+                Name = name;
+            }
+
+            public override string ToString()
+            {
+                return Name?.ToString() ?? Value.ToString();
+            }
+
+            public static implicit operator double(DoubleValue v) => v.Value;
+        }
+
         private static void Assert()
         {
             var v = Math.Pow(2, 24);
@@ -150,13 +169,12 @@ namespace Study
             return result;
         }
 
-        private static string GenerateTable(double[] values, string[]? descriptions = null, bool sem = true)
+        private static string GenerateTable(DoubleValue[] values, bool sem = true)
         {
-            var columns = new List<string>();
-            if (descriptions != null)
+            var columns = new List<string>
             {
-                columns.Add("Number");
-            }
+                "Number"
+            };
 
             if (sem)
             {
@@ -242,11 +260,10 @@ namespace Study
                 Trace.Assert(e.Length == 11);
                 Trace.Assert(m.Length == 52);
 
-                var cells = new List<string>();
-                if (descriptions != null)
+                var cells = new List<string>
                 {
-                    cells.Add(descriptions[i]);
-                }
+                    value.ToString()
+                };
 
                 if (sem)
                 {
@@ -286,38 +303,23 @@ namespace Study
             //var s = Functions.ToExactString(d);
             //var t1 = GenerateMarkdownTable(BitConverter.GetBytes(d));
 
-            double[] values = [
-                1 / 3d,
-                Math.Sqrt(2),
-                Math.PI,
-                Math.E,
-                46.42829231507700882275457843206822872161865234375d,
-                Math.Pow(2, 24),
-                0.1d,
-                0.01d,
-                123.456d,
-                1d,
-                -1d,
-                0d,
+            DoubleValue[] values = [
+                new(1 / 3d, @"$\frac{1}{3}$"),
+                new(Math.Sqrt(2), @"$\sqrt2$"),
+                new(Math.PI, "π"),
+                new(Math.E, "e"),
+                new(46.42829231507700882275457843206822872161865234375d, "46.42829231507700882275457843206822872161865234375"),
+                new(Math.Pow(2, 24), "$2^{24}$"),
+                new(0.1d, "0.1"),
+                new(0.01d, "0.01"),
+                new(123.456d, "123.456"),
+                new(1d, "1"),
+                new(-1d, "-1"),
+                new(0d, "0"),
             ];
 
-            string[] descriptions = [
-                @"$\frac{1}{3}$",
-                @"$\sqrt2$",
-                "π",
-                "e",
-                "46.42829231507700882275457843206822872161865234375",
-                "$2^{24}$",
-                "0.1",
-                "0.01",
-                "123.456",
-                "1",
-                "-1",
-                "0",
-            ];
-
-            var t2 = GenerateTable(values, descriptions, true);
-            var t3 = GenerateTable(values, descriptions, false);
+            var t2 = GenerateTable(values, true);
+            var t3 = GenerateTable(values, false);
 
             var table = t2 + Environment.NewLine + Environment.NewLine + t3;
         }

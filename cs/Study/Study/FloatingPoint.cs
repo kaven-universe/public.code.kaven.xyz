@@ -72,51 +72,75 @@ namespace Study
             return row;
         }
 
-        private static string MoveDot(string binaryString, int offset)
+        private static string MoveDot(string value, int offset)
         {
-            // Find the position of the dot in the original binary string
-            var dotPosition = binaryString.IndexOf('.');
-
-            // If the dot is not present, assume it's at the end of the string
-            if (dotPosition == -1)
+            if (offset == 0)
             {
-                dotPosition = binaryString.Length;
+                return value;
             }
 
-            // Calculate the new dot position after the offset
-            var newDotPosition = dotPosition + offset;
+            string left;
+            string right;
 
-            // Ensure the new dot position is within the bounds of the string
-            if (newDotPosition < 0)
+            var dotIndex = value.IndexOf('.');
+            if (dotIndex != -1)
             {
-                return "0." + string.Join(string.Empty, Enumerable.Repeat("0", Math.Abs(newDotPosition))) + binaryString.Replace(".", string.Empty);
+                if (value.Count(p => p == '.') != 1)
+                {
+                    throw new Exception();
+                }
+
+                left = value[..dotIndex];
+                right = value[(dotIndex + 1)..];
             }
-            else if (newDotPosition >= binaryString.Length)
+            else
             {
-                return binaryString.Replace(".", string.Empty) + string.Join(string.Empty, Enumerable.Repeat("0", newDotPosition - binaryString.Length));
-            }
-
-            // Insert the dot at the new position
-            var shiftedBinaryString = binaryString.Insert(newDotPosition, ".");
-
-            // Remove the dot from the old position
-            shiftedBinaryString = shiftedBinaryString.Remove(dotPosition + (newDotPosition > dotPosition ? 1 : 0), 1);
-
-            // If moving to the left and the new dot position is before the start, add leading zeros
-            if (newDotPosition < dotPosition)
-            {
-                var leadingZeros = dotPosition - newDotPosition;
-                shiftedBinaryString = shiftedBinaryString.Insert(0, new string('0', leadingZeros));
+                left = value;
+                right = string.Empty;
             }
 
-            // If moving to the right and the new dot position is after the end, add trailing zeros
-            if (newDotPosition > dotPosition)
+            var abs = Math.Abs(offset);
+            if (offset < 0)
             {
-                var trailingZeros = newDotPosition - dotPosition;
-                shiftedBinaryString = shiftedBinaryString.PadRight(shiftedBinaryString.Length + trailingZeros, '0');
+                while (left.Length - 1 < abs)
+                {
+                    left = "0" + left;
+                }
+
+                left = left.Insert(left.Length - abs, ".");
+            }
+            else
+            {
+                while (right.Length < abs)
+                {
+                    right += "0";
+                }
+
+                right = right.Insert(abs, ".");
             }
 
-            return shiftedBinaryString;
+            return left + right.Trim('.');
+        }
+
+        private static double BinaryToDouble(string value)
+        {
+            var dotIndex = value.IndexOf('.');
+            var power = (dotIndex != -1 ? dotIndex : value.Length) - 1;
+
+            var result = 0d;
+            foreach (var item in value)
+            {
+                if (item == '.')
+                {
+                    Trace.Assert(power == -1);
+                    continue;
+                }
+
+                result += (item == '0' ? 0 : 1) * Math.Pow(2, power);
+                power--;
+            }
+
+            return result;
         }
 
         private static string GenerateTable(double[] values, string[]? descriptions = null, bool sem = true)
@@ -229,11 +253,9 @@ namespace Study
 
                     var offset = Convert.ToInt32(e, 2) - 1023;
                     var binStr = MoveDot($"1.{m}", offset);
-                    //cells.Add($"${Math.Pow(-1, Convert.ToInt32(s, 2))} * {binStr}_{{(2)}}$");
+                    cells.Add($"${Math.Pow(-1, s == "0" ? 0 : 1)} * {binStr}_{{(2)}}$");
 
-                    cells.Add($"${Math.Pow(-1, Convert.ToInt32(s, 2))} * {binStr}$");
-
-                    cells.Add($"{value}");
+                    cells.Add($"{BinaryToDouble(binStr)}");
                 }
 
                 var row = "| " + string.Join(" | ", cells) + " |";

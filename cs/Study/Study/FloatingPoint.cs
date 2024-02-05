@@ -4,16 +4,10 @@ namespace Study
 {
     public class FloatingPoint
     {
-        public class DoubleValue
+        public class DoubleValue(double value, string? name = default)
         {
-            public double Value;
-            public string? Name;
-
-            public DoubleValue(double value, string? name = default)
-            {
-                Value = value;
-                Name = name;
-            }
+            public double Value = value;
+            public string? Name = name;
 
             public override string ToString()
             {
@@ -148,7 +142,7 @@ namespace Study
             return result;
         }
 
-        
+
 
         private static string GenerateTable(DoubleValue[] values, bool sem = true)
         {
@@ -162,14 +156,15 @@ namespace Study
                 columns.Add("Sign (s, 1 bit)");
                 columns.Add("Stored exponent (e, 11 bits)");
                 columns.Add("Mantissa (m, 52 bits)");
-                columns.Add("Exact decimal representation");
             }
             else
             {
                 columns.Add("$(-1)^s * 1.m_{(2)} * 2^{e-1023}$");
                 //columns.Add(string.Empty);
 
-                columns.Add("Value");
+                columns.Add("Fraction");
+                columns.Add("Exact decimal representation");
+                columns.Add("Value (.NET)");
             }
 
             var header = BuildRow([.. columns]);
@@ -250,19 +245,25 @@ namespace Study
                 {
                     cells.Add(s);
                     cells.Add(e);
-                    cells.Add(m);
-                    cells.Add(Functions.ToExactString(value));
+                    cells.Add(m.AddSpaces());
                 }
                 else
                 {
                     cells.Add($"$(-1)^{s} * 1.{m}_{{(2)}} * 2^{{{Convert.ToUInt64(e, 2)} - 1023}}$");
 
-                    var sign = Math.Pow(-1, s == "0" ? 0 : 1);
+                    var sign = s == "0" ? 1 : -1; //Math.Pow(-1, s == "0" ? 0 : 1);
 
                     var offset = Convert.ToInt32(e, 2) - 1023;
                     var binStr = MoveDot($"1.{m}", offset);
                     //cells.Add($"${sign} * {binStr}_{{(2)}}$");
 
+                    var f = Functions.BinaryStringToFraction(binStr);
+                    var dec = (sign * f).ToString(int.MaxValue);
+
+                    Trace.Assert(Functions.ToExactString(value) == dec);
+
+                    cells.Add($"${sign} * \\frac{{{f.Numerator}}}{{{f.Denominator}}}$");
+                    cells.Add(dec);
                     cells.Add($"{sign * Functions.BinaryStringToDouble(binStr)}");
                 }
 
@@ -276,6 +277,8 @@ namespace Study
 
         public static void Run()
         {
+            //Functions.ToExactString(0.333d);
+
             //Assert();
 
             //var d1 = 46.42829231507700882275457843206822872161865234375;
@@ -286,7 +289,10 @@ namespace Study
 
             DoubleValue[] values = [
                 new(1 / 3d, @"$\frac{1}{3}$"),
+                new(1 / 2d, @"$\frac{1}{2}$"),
+                new(1 / 10d, @"$\frac{1}{10}$"),
                 new(Math.Sqrt(2), @"$\sqrt2$"),
+                new(Math.Sqrt(3), @"$\sqrt3$"),
                 new(Math.PI, "π"),
                 new(Math.E, "e"),
                 new(46.42829231507700882275457843206822872161865234375d, "46.42829231507700882275457843206822872161865234375"),
@@ -296,7 +302,7 @@ namespace Study
                 new(123.456d, "123.456"),
                 new(1d, "1"),
                 new(-1d, "-1"),
-                new(0d, "0"),
+                //new(0d, "0"),
             ];
 
             var t2 = GenerateTable(values, true);

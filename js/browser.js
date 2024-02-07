@@ -4,16 +4,21 @@
  * @website:     http://blog.kaven.xyz
  * @file:        [kaven-public] /js/browser.js
  * @create:      2021-10-11 11:20:31.863
- * @modify:      2023-09-02 17:37:35.045
- * @times:       56
- * @lines:       259
- * @copyright:   Copyright © 2021-2023 Kaven. All Rights Reserved.
+ * @modify:      2024-02-07 09:39:28.699
+ * @times:       57
+ * @lines:       310
+ * @copyright:   Copyright © 2021-2024 Kaven. All Rights Reserved.
  * @description: [description]
  * @license:     [license]
  ********************************************************************/
 
 (() => {
     class Kaven {
+        static Keys = {
+            AUTO_REFRESH_INTERVAL: "AUTO_REFRESH_INTERVAL",
+            AUTO_REFRESH_TIMES: "AUTO_REFRESH_TIMES",
+        };
+
         static setCookie(name, value, days) {
             let expires = "";
             if (days) {
@@ -40,8 +45,6 @@
         }
 
         static DEV(enable) {
-            const K_DEV = "K_DEV";
-
             if (enable === undefined) {
                 return Kaven.getCookie(K_DEV) === "true";
             }
@@ -123,6 +126,33 @@
             document.head.appendChild(styleSheet);
         }
 
+        /**
+         * @param { number } interval in ms
+         */
+        static startAutoRefreshPage(interval) {
+            Kaven.setCookie(Kaven.Keys.AUTO_REFRESH_INTERVAL, interval, 365);
+        }
+
+        static stopAutoRefreshPage() {
+            Kaven.eraseCookie(Kaven.Keys.AUTO_REFRESH_INTERVAL);
+        }
+
+        static _refreshPage() {
+            const interval = Number(Kaven.getCookie(Kaven.Keys.AUTO_REFRESH_INTERVAL));
+            if (interval > 0) {
+                setTimeout(() => {
+                    const times = Number(Kaven.getCookie(Kaven.Keys.AUTO_REFRESH_TIMES));
+                    if (Number.isNaN(times)) {
+                        times = 0;
+                    }
+                    times++;
+                    Kaven.setCookie(Kaven.Keys.AUTO_REFRESH_TIMES, times);
+
+                    location.reload();
+                }, interval);
+            }
+        }
+
         static main() {
             const isZhihu = Kaven.checkHostName("zhihu.com");
             const isCSDN = Kaven.checkHostName("csdn.net");
@@ -131,6 +161,13 @@
 
             if (Kaven.DEV()) {
                 console.info(`isZhihu:${isZhihu}, isCSDN:${isCSDN}, isJianshu:${isJianshu}`);
+            }
+
+            const times = Number(Kaven.getCookie(Kaven.Keys.AUTO_REFRESH_TIMES));
+            if (times) {
+                console.info(`_refreshPage:${times}`);
+
+                Kaven._refreshPage();
             }
 
             /**

@@ -4,9 +4,9 @@
  * @website:     http://blog.kaven.xyz
  * @file:        [kaven-public] /js/browser.js
  * @create:      2021-10-11 11:20:31.863
- * @modify:      2024-02-07 10:09:38.219
- * @times:       63
- * @lines:       319
+ * @modify:      2024-02-07 10:29:04.849
+ * @times:       67
+ * @lines:       336
  * @copyright:   Copyright © 2021-2024 Kaven. All Rights Reserved.
  * @description: [description]
  * @license:     [license]
@@ -17,12 +17,13 @@
         static Keys = {
             DEV: "K_DEV",
             AUTO_REFRESH_INTERVAL: "AUTO_REFRESH_INTERVAL",
+            AUTO_REFRESH_INTERVAL_MAX: "AUTO_REFRESH_INTERVAL_MAX",
             AUTO_REFRESH_TIMES: "AUTO_REFRESH_TIMES",
         };
 
         static setCookie(name, value, days) {
             name = "F5BBCA110AD3BDF4AF326BDD588741EC" + name;
-            
+
             let expires = "";
             if (days) {
                 const date = new Date();
@@ -131,11 +132,18 @@
             document.head.appendChild(styleSheet);
         }
 
+        static getRandomValue(min, max) {
+            return Math.floor(Math.random() * (max - min + 1)) + min;
+        }
+
         /**
+         * By default, it refreshes automatically every 1 to 5 minutes.
          * @param { number } interval in ms
+         * @param { number } intervalMax is ms
          */
-        static startAutoRefreshPage(interval = 10000) {
-            Kaven.setCookie(Kaven.Keys.AUTO_REFRESH_INTERVAL, interval, 365);
+        static startAutoRefreshPage(interval = 60 * 1000, intervalMax = 5 * 60 * 1000) {
+            Kaven.setCookie(Kaven.Keys.AUTO_REFRESH_INTERVAL, interval);
+            Kaven.setCookie(Kaven.Keys.AUTO_REFRESH_INTERVAL_MAX, intervalMax);
 
             Kaven._internalRefreshPage();
         }
@@ -147,7 +155,13 @@
         static _internalRefreshPage() {
             const interval = Number(Kaven.getCookie(Kaven.Keys.AUTO_REFRESH_INTERVAL));
             if (interval > 0) {
-                console.info(`The page will automatically refresh after ${interval} milliseconds`);
+                const intervalMax = Number(Kaven.getCookie(Kaven.Keys.AUTO_REFRESH_INTERVAL_MAX));
+                const ms = intervalMax > interval ? Kaven.getRandomValue(interval, intervalMax) : interval;
+
+                console.info(`The page will automatically refresh after ${ms} milliseconds`);
+
+                // Allow users to interrupt, just refresh the page
+                Kaven.eraseCookie(Kaven.Keys.AUTO_REFRESH_INTERVAL);
 
                 setTimeout(() => {
                     let times = Number(Kaven.getCookie(Kaven.Keys.AUTO_REFRESH_TIMES));
@@ -157,8 +171,11 @@
                     times++;
                     Kaven.setCookie(Kaven.Keys.AUTO_REFRESH_TIMES, times);
 
+                    // Re-save the value to trigger the next refresh
+                    Kaven.setCookie(Kaven.Keys.AUTO_REFRESH_INTERVAL, interval);
+
                     location.reload();
-                }, interval);
+                }, ms);
             }
         }
 

@@ -4,9 +4,9 @@
  * @website:     http://blog.kaven.xyz
  * @file:        [kaven-public] /js/browser.js
  * @create:      2021-10-11 11:20:31.863
- * @modify:      2024-02-07 09:39:28.699
- * @times:       57
- * @lines:       310
+ * @modify:      2024-02-07 09:42:33.061
+ * @times:       58
+ * @lines:       311
  * @copyright:   Copyright © 2021-2024 Kaven. All Rights Reserved.
  * @description: [description]
  * @license:     [license]
@@ -15,6 +15,7 @@
 (() => {
     class Kaven {
         static Keys = {
+            K_DEV: "K_DEV",
             AUTO_REFRESH_INTERVAL: "AUTO_REFRESH_INTERVAL",
             AUTO_REFRESH_TIMES: "AUTO_REFRESH_TIMES",
         };
@@ -46,13 +47,13 @@
 
         static DEV(enable) {
             if (enable === undefined) {
-                return Kaven.getCookie(K_DEV) === "true";
+                return Kaven.getCookie(Kaven.Keys.K_DEV) === "true";
             }
 
             if (enable) {
-                Kaven.setCookie(K_DEV, "true", 1);
+                Kaven.setCookie(Kaven.Keys.K_DEV, "true", 1);
             } else {
-                Kaven.eraseCookie(K_DEV);
+                Kaven.eraseCookie(Kaven.Keys.K_DEV);
             }
         }
 

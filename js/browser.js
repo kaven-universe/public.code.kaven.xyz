@@ -4,9 +4,9 @@
  * @website:     http://blog.kaven.xyz
  * @file:        [kaven-public] /js/browser.js
  * @create:      2021-10-11 11:20:31.863
- * @modify:      2024-02-07 10:29:04.849
- * @times:       67
- * @lines:       336
+ * @modify:      2024-02-07 10:31:07.103
+ * @times:       68
+ * @lines:       337
  * @copyright:   Copyright © 2021-2024 Kaven. All Rights Reserved.
  * @description: [description]
  * @license:     [license]
@@ -22,7 +22,7 @@
         };
 
         static setCookie(name, value, days) {
-            name = "F5BBCA110AD3BDF4AF326BDD588741EC" + name;
+            name = "F5BBCA110AD3BDF4AF326BDD588741EC" + "_" + name;
 
             let expires = "";
             if (days) {
@@ -34,7 +34,7 @@
         }
 
         static getCookie(name) {
-            name = "F5BBCA110AD3BDF4AF326BDD588741EC" + name;
+            name = "F5BBCA110AD3BDF4AF326BDD588741EC" + "_" + name;
 
             const nameEQ = name + "=";
             const ca = document.cookie.split(";");
@@ -150,6 +150,7 @@
 
         static stopAutoRefreshPage() {
             Kaven.eraseCookie(Kaven.Keys.AUTO_REFRESH_INTERVAL);
+            Kaven.eraseCookie(Kaven.Keys.AUTO_REFRESH_TIMES);
         }
 
         static _internalRefreshPage() {

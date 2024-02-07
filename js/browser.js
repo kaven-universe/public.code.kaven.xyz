@@ -4,9 +4,9 @@
  * @website:     http://blog.kaven.xyz
  * @file:        [kaven-public] /js/browser.js
  * @create:      2021-10-11 11:20:31.863
- * @modify:      2024-02-07 09:42:33.061
- * @times:       58
- * @lines:       311
+ * @modify:      2024-02-07 09:46:48.336
+ * @times:       59
+ * @lines:       315
  * @copyright:   Copyright © 2021-2024 Kaven. All Rights Reserved.
  * @description: [description]
  * @license:     [license]
@@ -130,17 +130,21 @@
         /**
          * @param { number } interval in ms
          */
-        static startAutoRefreshPage(interval) {
+        static startAutoRefreshPage(interval = 10000) {
             Kaven.setCookie(Kaven.Keys.AUTO_REFRESH_INTERVAL, interval, 365);
+
+            Kaven._internalRefreshPage();
         }
 
         static stopAutoRefreshPage() {
             Kaven.eraseCookie(Kaven.Keys.AUTO_REFRESH_INTERVAL);
         }
 
-        static _refreshPage() {
+        static _internalRefreshPage() {
             const interval = Number(Kaven.getCookie(Kaven.Keys.AUTO_REFRESH_INTERVAL));
             if (interval > 0) {
+                console.info(`The page will automatically refresh after ${interval} milliseconds`)
+
                 setTimeout(() => {
                     const times = Number(Kaven.getCookie(Kaven.Keys.AUTO_REFRESH_TIMES));
                     if (Number.isNaN(times)) {
@@ -168,7 +172,7 @@
             if (times) {
                 console.info(`_refreshPage:${times}`);
 
-                Kaven._refreshPage();
+                Kaven._internalRefreshPage();
             }
 
             /**

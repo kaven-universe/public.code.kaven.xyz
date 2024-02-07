@@ -2,12 +2,12 @@
  * @author:      Kaven
  * @email:       kaven@wuwenkai.com
  * @website:     http://blog.kaven.xyz
- * @file:        [kaven-public] /.eslintrc.js
+ * @file:        [kaven-public] /.eslintrc.cjs
  * @create:      2021-07-07 07:42:19.333
- * @modify:      2022-11-03 17:59:37.712
- * @times:       5
- * @lines:       32
- * @copyright:   Copyright © 2021-2022 Kaven. All Rights Reserved.
+ * @modify:      2024-02-07 10:09:29.445
+ * @times:       7
+ * @lines:       34
+ * @copyright:   Copyright © 2021-2024 Kaven. All Rights Reserved.
  * @description: [description]
  * @license:     [license]
  ********************************************************************/
@@ -17,7 +17,7 @@ module.exports = {
         browser: true,
         es2021: true,
         node: true,
-        JQuery: true,
+        jquery: true,
     },
     // "extends": "eslint:recommended",
     extends: [
@@ -25,7 +25,7 @@ module.exports = {
         "@wenkai.wu/eslint-config",
     ],
     parserOptions: {
-        ecmaVersion: 12,
+        ecmaVersion: 2022,
     },
     rules: {
         "no-console": "off",

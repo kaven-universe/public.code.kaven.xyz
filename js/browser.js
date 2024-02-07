@@ -4,9 +4,9 @@
  * @website:     http://blog.kaven.xyz
  * @file:        [kaven-public] /js/browser.js
  * @create:      2021-10-11 11:20:31.863
- * @modify:      2024-02-07 09:46:48.336
- * @times:       59
- * @lines:       315
+ * @modify:      2024-02-07 10:09:38.219
+ * @times:       63
+ * @lines:       319
  * @copyright:   Copyright © 2021-2024 Kaven. All Rights Reserved.
  * @description: [description]
  * @license:     [license]
@@ -15,12 +15,14 @@
 (() => {
     class Kaven {
         static Keys = {
-            K_DEV: "K_DEV",
+            DEV: "K_DEV",
             AUTO_REFRESH_INTERVAL: "AUTO_REFRESH_INTERVAL",
             AUTO_REFRESH_TIMES: "AUTO_REFRESH_TIMES",
         };
 
         static setCookie(name, value, days) {
+            name = "F5BBCA110AD3BDF4AF326BDD588741EC" + name;
+            
             let expires = "";
             if (days) {
                 const date = new Date();
@@ -31,6 +33,8 @@
         }
 
         static getCookie(name) {
+            name = "F5BBCA110AD3BDF4AF326BDD588741EC" + name;
+
             const nameEQ = name + "=";
             const ca = document.cookie.split(";");
             for (let i = 0; i < ca.length; i++) {
@@ -47,13 +51,13 @@
 
         static DEV(enable) {
             if (enable === undefined) {
-                return Kaven.getCookie(Kaven.Keys.K_DEV) === "true";
+                return Kaven.getCookie(Kaven.Keys.DEV) === "true";
             }
 
             if (enable) {
-                Kaven.setCookie(Kaven.Keys.K_DEV, "true", 1);
+                Kaven.setCookie(Kaven.Keys.DEV, "true", 1);
             } else {
-                Kaven.eraseCookie(Kaven.Keys.K_DEV);
+                Kaven.eraseCookie(Kaven.Keys.DEV);
             }
         }
 
@@ -143,10 +147,10 @@
         static _internalRefreshPage() {
             const interval = Number(Kaven.getCookie(Kaven.Keys.AUTO_REFRESH_INTERVAL));
             if (interval > 0) {
-                console.info(`The page will automatically refresh after ${interval} milliseconds`)
+                console.info(`The page will automatically refresh after ${interval} milliseconds`);
 
                 setTimeout(() => {
-                    const times = Number(Kaven.getCookie(Kaven.Keys.AUTO_REFRESH_TIMES));
+                    let times = Number(Kaven.getCookie(Kaven.Keys.AUTO_REFRESH_TIMES));
                     if (Number.isNaN(times)) {
                         times = 0;
                     }

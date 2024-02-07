@@ -4,9 +4,9 @@
  * @website:     http://blog.kaven.xyz
  * @file:        [kaven-public] /js/browser.js
  * @create:      2021-10-11 11:20:31.863
- * @modify:      2024-02-07 10:31:07.103
- * @times:       68
- * @lines:       337
+ * @modify:      2024-02-07 20:19:24.634
+ * @times:       69
+ * @lines:       339
  * @copyright:   Copyright © 2021-2024 Kaven. All Rights Reserved.
  * @description: [description]
  * @license:     [license]
@@ -47,6 +47,8 @@
         }
 
         static eraseCookie(name) {
+            name = "F5BBCA110AD3BDF4AF326BDD588741EC" + "_" + name;
+            
             document.cookie = name + "=; Path=/; Expires=Thu, 01 Jan 1970 00:00:01 GMT;";
         }
 

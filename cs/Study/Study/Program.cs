@@ -1,12 +1,14 @@
-﻿namespace Study
+﻿
+namespace Study
 {
-    internal class Program
+    internal partial class Program
     {
         private static void Main()
         {
             //Inheritance.Run();
             //Enumeration.Run();
-            FloatingPoint.Run();
+            //FloatingPoint.Run();
+            Pi.Run();
 
             Console.ReadLine();
         }

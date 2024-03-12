@@ -4,9 +4,9 @@
  * @website:     http://blog.kaven.xyz
  * @file:        [kaven-public] /js/tfs.js
  * @create:      2021-06-10 10:39:48.020
- * @modify:      2024-01-29 11:24:04.589
- * @times:       48
- * @lines:       271
+ * @modify:      2024-03-12 15:50:37.348
+ * @times:       49
+ * @lines:       298
  * @copyright:   Copyright © 2021-2024 Kaven. All Rights Reserved.
  * @description: [description]
  * @license:     [license]
@@ -50,7 +50,7 @@ async function GetUserProfile() {
 
     const r = await fetch(url);
     if (r.ok) {
-        return r.json()
+        return r.json();
     }
 
     return undefined;
@@ -62,7 +62,7 @@ async function GetUserEmail() {
 }
 
 function GetChangesets() {
-    return $(".group-results:first").find(".change-info").map(function () { return $(this).attr("title").split(" ")[0]; }).get();
+    return $(".group-results:first").find(".change-info").map(function() { return $(this).attr("title").split(" ")[0]; }).get();
 }
 
 // GET the changesets filtered by author.
@@ -73,7 +73,7 @@ function GetChangesets() {
 
 async function GetChangesetsByAuthor(author, fromDate, toDate) {
     const url = new URL(GetProjectUrl());
-    url.pathname += `/_apis/tfvc/changesets`;
+    url.pathname += "/_apis/tfvc/changesets";
 
     if (!author) {
         author = GetAuthor(); // await GetUserEmail();
@@ -267,4 +267,31 @@ function CopyWorkReportByDays(days, onlyWorkItems) {
         console.log(report);
         _copy(report);
     })();
+}
+
+function formatDate(date) {
+    // Get date components
+    const year = date.getFullYear();
+    let month = date.getMonth() + 1; // Month is zero-based, so add 1
+    let day = date.getDate();
+    let hours = date.getHours();
+    let minutes = date.getMinutes();
+    let seconds = date.getSeconds();
+
+    // Ensure two-digit formatting for day, month, hours, minutes, and seconds
+    if (month < 10) month = "0" + month;
+    if (day < 10) day = "0" + day;
+    if (hours < 10) hours = "0" + hours;
+    if (minutes < 10) minutes = "0" + minutes;
+    if (seconds < 10) seconds = "0" + seconds;
+
+    // Concatenate the components to form the formatted date string
+    const formattedDate = `${year}/${month}/${day} ${hours}:${minutes}:${seconds}`;
+    
+    return formattedDate;
+}
+
+async function ListChangesets() {
+    const items = await GetChangesetsByAuthor();  
+    return items.map(p => `${p.changesetId}    ${p.author.displayName}    ${formatDate(new Date(p.createdDate))}    ${p.comment}`);
 }

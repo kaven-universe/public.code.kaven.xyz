@@ -1,4 +1,5 @@
-﻿
+﻿#define Test
+
 namespace Study
 {
     internal partial class Program
@@ -8,7 +9,9 @@ namespace Study
             //Inheritance.Run();
             //Enumeration.Run();
             //FloatingPoint.Run();
-            Pi.Run();
+            //Pi.Run();
+
+            Conditional.Conditional.Test();
 
             Console.ReadLine();
         }

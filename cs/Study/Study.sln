@@ -3,7 +3,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.8.34511.84
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Study", "Study\Study.csproj", "{C87D6EC7-53CC-48D3-9E9D-043636A688DB}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Study", "Study\Study.csproj", "{C87D6EC7-53CC-48D3-9E9D-043636A688DB}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Conditional", "Conditional\Conditional.csproj", "{CC39EF15-40E7-4745-BADB-43137B20F74E}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -15,6 +17,10 @@ Global
 		{C87D6EC7-53CC-48D3-9E9D-043636A688DB}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{C87D6EC7-53CC-48D3-9E9D-043636A688DB}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{C87D6EC7-53CC-48D3-9E9D-043636A688DB}.Release|Any CPU.Build.0 = Release|Any CPU
+		{CC39EF15-40E7-4745-BADB-43137B20F74E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CC39EF15-40E7-4745-BADB-43137B20F74E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CC39EF15-40E7-4745-BADB-43137B20F74E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{CC39EF15-40E7-4745-BADB-43137B20F74E}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

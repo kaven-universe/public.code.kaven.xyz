@@ -11,7 +11,9 @@ namespace Study
             //FloatingPoint.Run();
             //Pi.Run();
 
-            Conditional.Conditional.Test();
+            //Conditional.Conditional.Test();
+
+            IPAddressEquals.Run();
 
             Console.ReadLine();
         }

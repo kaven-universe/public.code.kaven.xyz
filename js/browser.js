@@ -4,9 +4,9 @@
  * @website:     http://blog.kaven.xyz
  * @file:        [kaven-public] /js/browser.js
  * @create:      2021-10-11 11:20:31.863
- * @modify:      2024-02-07 20:19:24.634
- * @times:       69
- * @lines:       339
+ * @modify:      2024-04-22 17:07:49.334
+ * @times:       70
+ * @lines:       342
  * @copyright:   Copyright © 2021-2024 Kaven. All Rights Reserved.
  * @description: [description]
  * @license:     [license]
@@ -187,6 +187,7 @@
             const isCSDN = Kaven.checkHostName("csdn.net");
             const isJianshu = Kaven.checkHostName("jianshu.com");
             const isChatGpt = Kaven.checkHostName("chat.openai.com");
+            const isOSChina = Kaven.checkHostName("oschina.net");
 
             if (Kaven.DEV()) {
                 console.info(`isZhihu:${isZhihu}, isCSDN:${isCSDN}, isJianshu:${isJianshu}`);
@@ -228,7 +229,7 @@
                 Kaven.click("#csdn-redpack > em");
                 Kaven.click("#csdn-redpack > div > em");
 
-                Kaven.click("#passportbox > span");
+                Kaven.click("#passportbox > img");
 
                 $(document).on("DOMNodeInserted", () => {
                     $("passport-login-container")?.remove();
@@ -240,6 +241,8 @@
                 Kaven.addCss(`.w-full.text-token-text-primary div div {
                     max-width: none;
                 }`);
+            } else if (isOSChina) {
+                prefixSet.add("https://www.oschina.net/action/GoToLink?url=");
             } else {
                 return;
             }

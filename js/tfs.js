@@ -4,9 +4,9 @@
  * @website:     http://blog.kaven.xyz
  * @file:        [kaven-public] /js/tfs.js
  * @create:      2021-06-10 10:39:48.020
- * @modify:      2024-03-12 15:50:37.348
- * @times:       49
- * @lines:       298
+ * @modify:      2024-04-28 17:43:41.838
+ * @times:       50
+ * @lines:       305
  * @copyright:   Copyright © 2021-2024 Kaven. All Rights Reserved.
  * @description: [description]
  * @license:     [license]
@@ -14,15 +14,22 @@
 
 
 function GetLatestPassedMonday() {
+    // Get the current date
     const today = new Date();
-    const currentDayOfWeek = today.getDay();
-    const difference = currentDayOfWeek - 1; // Monday is the first day of the week (index 0)
 
-    // Calculate the milliseconds for the latest passed Monday
-    const millisecondsInADay = 24 * 60 * 60 * 1000;
-    const latestMonday = new Date(today.getTime() - difference * millisecondsInADay);
+    // Get the day of the week (0 = Sunday, 1 = Monday, ..., 6 = Saturday)
+    const currentDay = today.getDay();
 
-    return latestMonday;
+    // Calculate the offset to get to last Monday
+    // If today is Monday, then the offset to get to last Monday is 7
+    const daysSinceMonday = (currentDay + 6) % 7;
+
+    // Calculate the date of the last Monday
+    const lastMonday = new Date(today);
+    lastMonday.setDate(today.getDate() - daysSinceMonday);
+
+    console.log("Last Monday was:", lastMonday.toDateString());
+    return lastMonday;
 }
 
 function SubtractDaysFromDate(originalDate, daysToSubtract) {

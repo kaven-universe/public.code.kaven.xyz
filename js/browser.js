@@ -4,9 +4,9 @@
  * @website:     http://blog.kaven.xyz
  * @file:        [kaven-public] /js/browser.js
  * @create:      2021-10-11 11:20:31.863
- * @modify:      2024-08-12 17:06:49.196
- * @times:       72
- * @lines:       346
+ * @modify:      2024-08-12 17:21:44.364
+ * @times:       73
+ * @lines:       350
  * @copyright:   Copyright © 2021-2024 Kaven. All Rights Reserved.
  * @description: [description]
  * @license:     [license]
@@ -293,6 +293,10 @@
                     const href = target.href;
 
                     if (href) {
+                        if (href.startsWith("/")) {
+                            return false;
+                        }
+
                         window.open(href, "_blank")?.focus();
                         return true;
                     }

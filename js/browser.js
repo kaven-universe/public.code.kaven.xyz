@@ -4,9 +4,9 @@
  * @website:     http://blog.kaven.xyz
  * @file:        [kaven-public] /js/browser.js
  * @create:      2021-10-11 11:20:31.863
- * @modify:      2024-08-12 17:21:44.364
- * @times:       73
- * @lines:       350
+ * @modify:      2024-08-12 17:28:50.965
+ * @times:       75
+ * @lines:       358
  * @copyright:   Copyright © 2021-2024 Kaven. All Rights Reserved.
  * @description: [description]
  * @license:     [license]
@@ -293,12 +293,20 @@
                     const href = target.href;
 
                     if (href) {
-                        if (href.startsWith("/")) {
-                            return false;
+                        if (Kaven.DEV()) {
+                            console.log("href: ", href);
                         }
 
-                        window.open(href, "_blank")?.focus();
-                        return true;
+                        // Create a new URL object from the link's href
+                        const linkHost = new URL(href).host;
+    
+                        // Check if the link's host matches the current page's host
+                        if (linkHost === location.host) {
+                            return false;
+                        } else {
+                            window.open(href, "_blank")?.focus();
+                            return true;
+                        } 
                     }
                 }
 

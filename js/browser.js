@@ -4,9 +4,9 @@
  * @website:     http://blog.kaven.xyz
  * @file:        [kaven-public] /js/browser.js
  * @create:      2021-10-11 11:20:31.863
- * @modify:      2024-04-22 17:07:49.334
- * @times:       70
- * @lines:       342
+ * @modify:      2024-08-12 17:04:19.746
+ * @times:       71
+ * @lines:       345
  * @copyright:   Copyright © 2021-2024 Kaven. All Rights Reserved.
  * @description: [description]
  * @license:     [license]
@@ -188,6 +188,7 @@
             const isJianshu = Kaven.checkHostName("jianshu.com");
             const isChatGpt = Kaven.checkHostName("chat.openai.com");
             const isOSChina = Kaven.checkHostName("oschina.net");
+            const isJueJin = Kaven.checkHostName("juejin.cn");
 
             if (Kaven.DEV()) {
                 console.info(`isZhihu:${isZhihu}, isCSDN:${isCSDN}, isJianshu:${isJianshu}`);
@@ -243,6 +244,8 @@
                 }`);
             } else if (isOSChina) {
                 prefixSet.add("https://www.oschina.net/action/GoToLink?url=");
+            } else if (isJueJin) {
+                prefixSet.add("https://link.juejin.cn?target=");
             } else {
                 return;
             }

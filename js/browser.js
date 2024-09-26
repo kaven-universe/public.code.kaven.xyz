@@ -4,8 +4,8 @@
  * @website:     http://blog.kaven.xyz
  * @file:        [kaven-public] /js/browser.js
  * @create:      2021-10-11 11:20:31.863
- * @modify:      2024-09-26 13:35:20.619
- * @times:       76
+ * @modify:      2024-09-26 13:37:32.478
+ * @times:       77
  * @lines:       370
  * @copyright:   Copyright © 2021-2024 Kaven. All Rights Reserved.
  * @description: [description]
@@ -299,7 +299,7 @@
 
                         for (const prefix of prefixSet) {
                             if (href.startsWith(prefix)) {
-                                href = href.substring(prefix.length);
+                                href = decodeURIComponent(href.substring(prefix.length));
 
                                 if (Kaven.DEV()) {
                                     console.log("href: ", href);

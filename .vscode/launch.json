@@ -6,13 +6,28 @@
     "configurations": [
         {
             "name": "Python: Current File",
-            "type": "python",
+            "type": "debugpy",
             "request": "launch",
             "program": "${file}",
             "console": "integratedTerminal",
             "env": {
                 "UNRAR_LIB_PATH": "${workspaceFolder}\\UnRAR64.dll"
             }
+        },
+        {
+            "type": "node",
+            "request": "launch",
+            "name": "Node: Current File",
+            "skipFiles": [
+                "<node_internals>/**"
+            ],
+            "program": "${file}",
+            "runtimeArgs": [
+                "--experimental-modules"
+            ],
+            "outFiles": [
+                "${workspaceFolder}/**/*.js"
+            ]
         },
         {
             "name": "Launch Program",

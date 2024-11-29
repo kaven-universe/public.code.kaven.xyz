@@ -1,12 +1,14 @@
 {
 	"name": "kaven-public",
 	"devDependencies": {
-		"@types/jquery": "^3.5.29",
-		"@wenkai.wu/eslint-config": "^1.0.7",
-		"eslint": "^8.56.0"
+		"@types/jquery": "^3.5.32",
+		"@wenkai.wu/eslint-config": "^2.2.1",
+		"eslint": "^9.15.0"
 	},
 	"dependencies": {
-		"kaven-basic": "^4.3.4",
-		"kaven-utils": "^5.4.2"
+		"axios": "^1.7.8",
+		"kaven-basic": "^4.4.0",
+		"kaven-utils": "^5.4.4",
+		"moment": "^2.30.1"
 	}
 }

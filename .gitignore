@@ -427,3 +427,5 @@ file-list.txt
 .vscode/.ropeproject/objectdb
 node_modules/
 generated/
+
+*.config.json

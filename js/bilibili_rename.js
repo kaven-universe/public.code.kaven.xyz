@@ -4,8 +4,8 @@
  * @website:     http://blog.kaven.xyz
  * @file:        [kaven-public] /js/bilibili_rename.js
  * @create:      2024-12-08 13:14:16.704
- * @modify:      2024-12-08 14:38:18.993
- * @times:       4
+ * @modify:      2024-12-08 15:04:16.397
+ * @times:       5
  * @lines:       74
  * @copyright:   Copyright © 2024 Kaven. All Rights Reserved.
  * @description: [description]
@@ -19,7 +19,7 @@ function sleep(ms) {
 }
 
 async function rename() {
-    const key = "TheLongDark ";
+    const key = "《四海兄弟_ 最终版》 ";
 
     const rows = document.querySelectorAll("#cc-body > div.cc-content-body.upload-manage.pos-center > div.content > div:nth-child(2) > div > div.ep-edit-section-list > div.ep-table > div:nth-child(2) > div");
     for (const row of rows) {
@@ -43,7 +43,7 @@ async function rename() {
                 let title = input.value.substring(key.length);
                 title = title.replaceAll("-", "").replaceAll(" ", "").trim();
 
-                input.value = title;
+                input.value = "四海兄弟 最终版" + title;
 
                 // Optionally trigger an input event for dynamic updates
                 const event = new Event("input", { bubbles: true });

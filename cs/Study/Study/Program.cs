@@ -13,7 +13,9 @@ namespace Study
 
             //Conditional.Conditional.Test();
 
-            IPAddressEquals.Run();
+            //IPAddressEquals.Run();
+
+            Cast.Run();
 
             Console.ReadLine();
         }

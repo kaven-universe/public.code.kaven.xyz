@@ -6,17 +6,27 @@ namespace Study
     {
         private static void Main()
         {
-            //Inheritance.Run();
-            //Enumeration.Run();
-            //FloatingPoint.Run();
-            //Pi.Run();
+            try
+            {
+                //Inheritance.Run();
+                //Enumeration.Run();
+                //FloatingPoint.Run();
+                //Pi.Run();
 
-            //Conditional.Conditional.Test();
+                //Conditional.Conditional.Test();
 
-            //IPAddressEquals.Run();
+                //IPAddressEquals.Run();
 
-            Cast.Run();
+                //Cast.Run();
 
+                DebugTest.Run();
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex);
+            }
+
+            Console.WriteLine("Press any key to exit...");
             Console.ReadLine();
         }
     }

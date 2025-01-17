@@ -23,10 +23,11 @@
             ],
             "program": "${file}",
             "runtimeArgs": [
-                "--experimental-modules"
+                "--experimental-modules",
+                "--experimental-strip-types",
             ],
             "outFiles": [
-                "${workspaceFolder}/**/*.js"
+                "${workspaceFolder}/**/*.(t|j)s"
             ]
         },
         {

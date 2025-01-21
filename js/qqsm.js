@@ -4,10 +4,10 @@
  * @website:     http://blog.kaven.xyz
  * @file:        [kaven-public] /js/qqsm.js
  * @create:      2023-01-22 16:44:38.451
- * @modify:      2023-01-22 18:39:42.020
- * @times:       6
- * @lines:       48
- * @copyright:   Copyright © 2023 Kaven. All Rights Reserved.
+ * @modify:      2025-01-22 06:36:35.126
+ * @times:       7
+ * @lines:       53
+ * @copyright:   Copyright © 2023-2025 Kaven. All Rights Reserved.
  * @description: [description]
  * @license:     [license]
  ********************************************************************/
@@ -34,8 +34,13 @@ if (!window.QQSM) {
             let t = 0;
             this.id = setInterval(() => {
                 layer.closeAll();
+                
                 this.click(`#hb > dl:nth-child(${index}) > dt`);
-                console.info(`index: ${index}, try: ${++t}`);
+
+                const name = document.querySelector(`#hb > dl:nth-child(${index}) > dd > p`)?.textContent;
+                const result = document.querySelector("div.layui-layer-content")?.textContent;
+
+                console.info(`[${new Date().toISOString()}][${name}] -> ${result}, index: ${index}, try: ${++t}`);
             }, timeout);
         }
 
@@ -43,5 +48,5 @@ if (!window.QQSM) {
             clearInterval(this.id);
             this.id = undefined;
         }
-    }
+    };
 }

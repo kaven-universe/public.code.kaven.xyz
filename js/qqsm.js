@@ -4,9 +4,9 @@
  * @website:     http://blog.kaven.xyz
  * @file:        [kaven-public] /js/qqsm.js
  * @create:      2023-01-22 16:44:38.451
- * @modify:      2025-01-22 06:52:45.098
- * @times:       8
- * @lines:       67
+ * @modify:      2025-02-02 20:21:57.324
+ * @times:       10
+ * @lines:       89
  * @copyright:   Copyright © 2023-2025 Kaven. All Rights Reserved.
  * @description: [description]
  * @license:     [license]
@@ -14,8 +14,11 @@
 
 if (!window.QQSM) {
     window.QQSM = class {
+        static running = false;
         static id;
         static layerOpen;
+        static content = "";
+        static contentUpdated = false;
 
         static click(selector) {
             const el = document.querySelector(selector);
@@ -31,8 +34,8 @@ if (!window.QQSM) {
             return new Date().toISOString();
         }
 
-        static start(timeout = 1000, index = 1) {
-            if (this.id) {
+        static start(index = 1, timeout = 100) {
+            if (this.running) {
                 return;
             }
 
@@ -40,19 +43,37 @@ if (!window.QQSM) {
                 this.layerOpen = layer.open;
 
                 layer.open = (options) => {
-                    console.info(`${this.now()}, ${options.content}`);
-                    this.layerOpen(options);
+                    this.content = options.content;
+
+                    const done = this.content.includes("奖品领取成功");
+                    if (done) {
+                        this.stop();
+                    } else {
+                        this.contentUpdated = true;
+                    }
+
+                    console.info(`${this.now()}, ${this.content}`);
+                    
+                    if (!this.running || done)    {
+                        this.layerOpen(options);
+                    }
                 };
             }
 
+            this.running = true;
+            
+            const name = document.querySelector(`#hb > dl:nth-child(${index}) > dd > p`)?.textContent;
+
             let t = 0;
             this.id = setInterval(() => {
+                if (!this.contentUpdated) {
+                    return;
+                }
+
                 layer.closeAll();
                 
+                this.contentUpdated = false;
                 this.click(`#hb > dl:nth-child(${index}) > dt`);
-
-                const name = document.querySelector(`#hb > dl:nth-child(${index}) > dd > p`)?.textContent;
-                // const result = document.querySelector("div.layui-layer-content")?.textContent;
 
                 console.info(`${this.now()}, ${name}, index: ${index}, try: ${++t}`);
             }, timeout);
@@ -61,6 +82,7 @@ if (!window.QQSM) {
         static stop() {
             clearInterval(this.id);
             this.id = undefined;
+            this.running = false;
         }
     };
 }

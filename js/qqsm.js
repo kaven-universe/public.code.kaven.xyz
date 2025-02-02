@@ -4,8 +4,8 @@
  * @website:     http://blog.kaven.xyz
  * @file:        [kaven-public] /js/qqsm.js
  * @create:      2023-01-22 16:44:38.451
- * @modify:      2025-02-02 20:24:05.635
- * @times:       11
+ * @modify:      2025-02-02 20:24:35.218
+ * @times:       12
  * @lines:       89
  * @copyright:   Copyright © 2023-2025 Kaven. All Rights Reserved.
  * @description: [description]
@@ -66,7 +66,7 @@ if (!window.QQSM) {
 
             let t = 0;
             this.id = setInterval(() => {
-                if (t > 0 || !this.contentUpdated) {
+                if (t > 0 && !this.contentUpdated) {
                     return;
                 }
 

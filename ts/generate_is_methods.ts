@@ -4,8 +4,8 @@
  * @website:     http://blog.kaven.xyz
  * @file:        [kaven-public] /ts/generate_is_methods.ts
  * @create:      2025-02-21 15:42:14.831
- * @modify:      2025-02-21 16:42:45.648
- * @times:       21
+ * @modify:      2025-03-25 14:47:04.833
+ * @times:       22
  * @lines:       123
  * @copyright:   Copyright © 2025 Kaven. All Rights Reserved.
  * @description: [description]
@@ -117,6 +117,6 @@ function generateIsMethods(filePath: string, outputFilePath: string) {
 }
   
 // Example usage
-const filePath = "D:/Zero/kaven-workbench/src/share/protobuf/message/message.ts";
-const outputFilePath = "D:/Zero/kaven-workbench/src/share/protobuf/message.is.generated.ts";
+const filePath = "C:/Users/Kaven/nguowk/kaven-workbench/src/share/protobuf/message/message.ts";
+const outputFilePath = "C:/Users/Kaven/nguowk/kaven-workbench/src/share/protobuf/message.is.generated.ts";
 generateIsMethods(filePath, outputFilePath);
